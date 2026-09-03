@@ -13,6 +13,10 @@ anywhere.
 
 ## Features
 
+- A **landing page** with a scrolling mosaic banner, then a full editor —
+  click "Create mosaic" any time to jump in (the editor loads on demand,
+  so the landing page itself stays fast)
+- **Light/dark mode**, following your system by default, with a toggle
 - **Format presets** for Instax Mini/Square/Wide and Polaroid 600/Go, plus a
   fully custom format
 - **Aspect-locked crop tool** that recomputes live as you change the grid,

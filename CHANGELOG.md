@@ -6,6 +6,23 @@ All notable changes to this project are documented here. Format follows
 
 ## [Unreleased]
 
+## [1.1.0] - 2026-09-03
+
+### Added
+
+- An Apple-inspired design system (spec §5.5): token-based light/dark
+  theming (system-aware, with a manual toggle) via Tailwind v4 + CSS
+  custom properties, a frosted-glass sticky header, restyled shared
+  chrome and form controls, and `lucide-react` icons throughout.
+- A marketing landing page (spec §5.6) as the app's entry point: sticky
+  frosted nav, a hero with an endlessly-looping, dual-direction
+  scrolling mosaic banner (transform/opacity-only, pauses on hover,
+  swaps to a static grid under `prefers-reduced-motion`), how-it-works,
+  format cards, feature highlights, a preview gallery, and a CTA band.
+  The editor now loads on demand (code-split) so a landing-page-only
+  visit doesn't pay for it.
+- `framer-motion` for restrained, reduced-motion-aware scroll reveals.
+
 ## [1.0.0] - 2026-09-03
 
 ### Added
@@ -45,5 +62,6 @@ All notable changes to this project are documented here. Format follows
   `@axe-core/playwright` (zero serious/critical violations on the editor,
   About, and Calibration pages).
 
-[Unreleased]: https://github.com/JoghurtSommelier/Framosaic/compare/v1.0.0...HEAD
+[Unreleased]: https://github.com/JoghurtSommelier/Framosaic/compare/v1.1.0...HEAD
+[1.1.0]: https://github.com/JoghurtSommelier/Framosaic/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/JoghurtSommelier/Framosaic/releases/tag/v1.0.0

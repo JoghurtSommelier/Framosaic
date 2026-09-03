@@ -103,3 +103,31 @@ input[type='checkbox'] {
     scroll-behavior: auto !important;
   }
 }
+
+@layer components {
+  /* Landing hero marquee (spec §5.6) — transform-only, GPU-friendly, duplicated
+     track for a seamless loop. Reduced-motion swaps to a static grid in JS
+     (MosaicBanner.tsx); this CSS-level freeze is a belt-and-suspenders backup. */
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  .marquee-track {
+    animation: marquee var(--marquee-duration, 40s) linear infinite;
+    will-change: transform;
+  }
+
+  .mosaic-banner:hover .marquee-track {
+    animation-play-state: paused;
+  }
+
+  .mosaic-banner-fade {
+    mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+  }
+}

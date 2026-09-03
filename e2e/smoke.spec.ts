@@ -8,6 +8,7 @@ import { ensureSamplePng } from './utils/samplePng'
 
 test('upload, configure, and export produces a correctly-named ZIP and a gluing-template PDF', async ({ page }) => {
   await page.goto('/')
+  await page.getByRole('button', { name: 'Upload a photo' }).click()
 
   await page.locator('input[type="file"][accept="image/*"]').setInputFiles(ensureSamplePng())
   await expect(page.getByText(/\d+×\d+px/)).toBeVisible()
