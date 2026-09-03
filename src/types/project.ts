@@ -57,7 +57,7 @@ export const ProjectSchema = z.object({
   format: FormatSchema,
   grid: GridSchema,
   gaps: GapsSchema,
-  crop: CropSchema,
+  crop: CropSchema.nullable(),
   adjustments: AdjustmentsSchema,
   export: ExportSettingsSchema,
   mapping: MappingSchema,

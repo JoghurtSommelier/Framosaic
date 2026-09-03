@@ -2,6 +2,14 @@ import { useState } from 'react'
 import { computeCropAspect, computeMosaicDimensionsMm, suggestGridForTargetWidth } from '../../engine/layout'
 import { formatMm, unitToMm } from '../../lib/units'
 import { useProjectStore } from '../../store/projectStore'
+import type { Grid } from '../../types/project'
+
+const GRID_PRESETS: Grid[] = [
+  { rows: 3, cols: 3 },
+  { rows: 4, cols: 4 },
+  { rows: 4, cols: 5 },
+  { rows: 5, cols: 7 },
+]
 
 export function GridControls() {
   const format = useProjectStore((s) => s.format)
@@ -44,6 +52,23 @@ export function GridControls() {
       <p className="text-xs text-stone-500">
         Mosaic size: {formatMm(mosaic.width, units)} × {formatMm(mosaic.height, units)}
       </p>
+
+      <div className="flex flex-wrap gap-1.5">
+        {GRID_PRESETS.map((preset) => (
+          <button
+            key={`${preset.cols}x${preset.rows}`}
+            type="button"
+            onClick={() => setGrid(preset)}
+            className={`rounded px-2 py-1 text-xs font-medium ${
+              grid.cols === preset.cols && grid.rows === preset.rows
+                ? 'bg-stone-800 text-white'
+                : 'bg-stone-100 text-stone-600 hover:bg-stone-200'
+            }`}
+          >
+            {preset.cols}×{preset.rows}
+          </button>
+        ))}
+      </div>
 
       <div className="flex items-end gap-2 border-t border-stone-200 pt-3">
         <label className="block text-sm text-stone-700">

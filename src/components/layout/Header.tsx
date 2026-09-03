@@ -1,8 +1,9 @@
 import { appConfig } from '../../config/appConfig'
+import { UndoRedoControls } from './UndoRedoControls'
 
-export function Header() {
+export function Header({ onOpenCalibration }: { onOpenCalibration?: () => void }) {
   return (
-    <header className="flex items-center justify-between border-b border-stone-200 bg-white px-4 py-3 sm:px-6">
+    <header className="flex items-center justify-between border-b border-stone-200 bg-white px-4 py-3 sm:px-6 print:hidden">
       <div className="flex items-center gap-2">
         <svg viewBox="0 0 64 64" className="h-7 w-7" aria-hidden="true">
           <rect x="2" y="2" width="27" height="32" rx="2" fill="#fafaf7" stroke="#1f2937" strokeWidth="2" />
@@ -12,18 +13,30 @@ export function Header() {
         </svg>
         <span className="text-lg font-semibold tracking-tight text-stone-900">Framosaic</span>
       </div>
-      <a
-        href={appConfig.githubUrl}
-        target="_blank"
-        rel="noreferrer"
-        className="flex items-center gap-1.5 rounded-md px-2 py-1 text-sm text-stone-600 hover:bg-stone-100 hover:text-stone-900"
-        aria-label="View Framosaic on GitHub"
-      >
-        <svg viewBox="0 0 16 16" className="h-5 w-5 fill-current" aria-hidden="true">
-          <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z" />
-        </svg>
-        <span className="hidden sm:inline">GitHub</span>
-      </a>
+      <div className="flex items-center gap-3">
+        <UndoRedoControls />
+        {onOpenCalibration && (
+          <button
+            type="button"
+            onClick={onOpenCalibration}
+            className="rounded px-2 py-1 text-sm text-stone-600 hover:bg-stone-100 hover:text-stone-900"
+          >
+            Calibration
+          </button>
+        )}
+        <a
+          href={appConfig.githubUrl}
+          target="_blank"
+          rel="noreferrer"
+          className="flex items-center gap-1.5 rounded-md px-2 py-1 text-sm text-stone-600 hover:bg-stone-100 hover:text-stone-900"
+          aria-label="View Framosaic on GitHub"
+        >
+          <svg viewBox="0 0 16 16" className="h-5 w-5 fill-current" aria-hidden="true">
+            <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z" />
+          </svg>
+          <span className="hidden sm:inline">GitHub</span>
+        </a>
+      </div>
     </header>
   )
 }

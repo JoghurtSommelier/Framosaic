@@ -1,19 +1,12 @@
-import type { PDFDocument, PDFFont, PDFImage, PDFPage, rgb as rgbFn } from 'pdf-lib'
+import type { PDFDocument, PDFFont, PDFImage, rgb as rgbFn } from 'pdf-lib'
 import { computeMosaicDimensionsMm } from '../engine/layout'
 import { computeTileFilmRectMm, computeTileImageRectMm } from '../engine/slicing'
 import { tileNumber } from '../lib/tileNumbering'
 import type { Format } from '../types/format'
 import type { Gaps, Grid } from '../types/project'
+import { drawCropMarks, mmToPt, PAPER_SIZES_MM, type PaperSize } from './pdfUnits'
 
-const PT_PER_MM = 72 / 25.4
-const mmToPt = (mm: number) => mm * PT_PER_MM
-
-export type PaperSize = 'a4' | 'letter'
-
-const PAPER_SIZES_MM: Record<PaperSize, { width: number; height: number }> = {
-  a4: { width: 210, height: 297 },
-  letter: { width: 215.9, height: 279.4 },
-}
+export type { PaperSize } from './pdfUnits'
 
 export interface GluingTemplateOptions {
   format: Format
@@ -216,39 +209,8 @@ function drawFullScaleTemplate(
         height: mmToPt(mosaic.height),
       })
 
-      drawCropMarks(page, pageMarginMm, contentWidthMm, contentHeightMm, yFromTop, rgb)
+      drawCropMarks(page, pageMarginMm, pageMarginMm, contentWidthMm, contentHeightMm, yFromTop, rgb)
     }
-  }
-}
-
-function drawCropMarks(
-  page: PDFPage,
-  marginMm: number,
-  contentWidthMm: number,
-  contentHeightMm: number,
-  yFromTop: (topMm: number) => number,
-  rgb: typeof rgbFn,
-) {
-  const markLenMm = 5
-  const corners: Array<[number, number]> = [
-    [marginMm, marginMm],
-    [marginMm + contentWidthMm, marginMm],
-    [marginMm, marginMm + contentHeightMm],
-    [marginMm + contentWidthMm, marginMm + contentHeightMm],
-  ]
-  for (const [xMm, topMm] of corners) {
-    page.drawLine({
-      start: { x: mmToPt(xMm - markLenMm), y: yFromTop(topMm) },
-      end: { x: mmToPt(xMm + markLenMm), y: yFromTop(topMm) },
-      thickness: mmToPt(0.3),
-      color: rgb(0, 0, 0),
-    })
-    page.drawLine({
-      start: { x: mmToPt(xMm), y: yFromTop(topMm - markLenMm) },
-      end: { x: mmToPt(xMm), y: yFromTop(topMm + markLenMm) },
-      thickness: mmToPt(0.3),
-      color: rgb(0, 0, 0),
-    })
   }
 }
 
