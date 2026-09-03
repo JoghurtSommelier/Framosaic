@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { AboutPage } from './components/about/AboutPage'
 import { AdjustmentControls } from './components/adjustments/AdjustmentControls'
 import { CalibrationPage } from './components/calibration/CalibrationPage'
 import { CropTool } from './components/crop/CropTool'
@@ -15,7 +16,7 @@ import { ProjectIO } from './components/project/ProjectIO'
 import { UploadDropzone } from './components/upload/UploadDropzone'
 
 function App() {
-  const [view, setView] = useState<'editor' | 'calibration'>('editor')
+  const [view, setView] = useState<'editor' | 'calibration' | 'about'>('editor')
 
   if (view === 'calibration') {
     return (
@@ -27,9 +28,19 @@ function App() {
     )
   }
 
+  if (view === 'about') {
+    return (
+      <div className="flex min-h-screen flex-col bg-stone-100">
+        <Header />
+        <AboutPage onBack={() => setView('editor')} />
+        <Footer />
+      </div>
+    )
+  }
+
   return (
     <div className="flex min-h-screen flex-col bg-stone-100">
-      <Header onOpenCalibration={() => setView('calibration')} />
+      <Header onOpenCalibration={() => setView('calibration')} onOpenAbout={() => setView('about')} />
       <main className="mx-auto w-full max-w-6xl flex-1 space-y-4 p-4 sm:p-6">
         <Section title="1. Upload a photo">
           <UploadDropzone />

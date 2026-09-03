@@ -9,6 +9,7 @@ import { cropToPreviewPxRect, scaleToFullFactor } from '../../lib/cropMapping'
 import { downloadBlob } from '../../lib/download'
 import { markDonationPromptShown, shouldShowDonationPrompt } from '../../lib/donationPrompt'
 import { useProjectStore } from '../../store/projectStore'
+import { validateFormat } from '../../types/format'
 import type { ExportFormat, ExportMode } from '../../types/project'
 import { DonationPrompt } from './DonationPrompt'
 
@@ -42,7 +43,8 @@ export function ExportPanel() {
   const [error, setError] = useState<string | null>(null)
   const [showDonation, setShowDonation] = useState(false)
 
-  const canExport = Boolean(sourceImage && crop)
+  const formatErrors = validateFormat(format)
+  const canExport = Boolean(sourceImage && crop) && formatErrors.length === 0
 
   let resolutionLevel: string | null = null
   let effectiveDpi = 0
@@ -96,7 +98,18 @@ export function ExportPanel() {
 
   return (
     <div className="space-y-4">
-      {!canExport && <p className="text-sm text-stone-500">Upload and crop a photo to enable export.</p>}
+      {!sourceImage || !crop ? (
+        <p className="text-sm text-stone-500">Upload and crop a photo to enable export.</p>
+      ) : null}
+
+      {formatErrors.length > 0 && (
+        <div role="alert" className="space-y-1 rounded-md border border-red-200 bg-red-50 px-3 py-2 text-xs text-red-700">
+          {formatErrors.map((err) => (
+            <p key={err}>{err}</p>
+          ))}
+          <p>Fix the custom format under "Format &amp; grid" before exporting.</p>
+        </div>
+      )}
 
       {resolutionLevel && (
         <div className={`rounded-md border px-3 py-2 text-xs ${RESOLUTION_STYLE[resolutionLevel]}`} role="status">
@@ -192,7 +205,7 @@ export function ExportPanel() {
         type="button"
         disabled={!canExport || isExporting}
         onClick={handleExport}
-        className="w-full rounded-md bg-sky-600 px-4 py-2 text-sm font-medium text-white hover:bg-sky-700 disabled:cursor-not-allowed disabled:bg-stone-300"
+        className="w-full rounded-md bg-sky-700 px-4 py-2 text-sm font-medium text-white hover:bg-sky-800 disabled:cursor-not-allowed disabled:bg-stone-300"
       >
         {isExporting
           ? progress

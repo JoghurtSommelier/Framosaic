@@ -8,10 +8,10 @@ export const GridSchema = z.object({
 export type Grid = z.infer<typeof GridSchema>
 
 export const GapsSchema = z.object({
-  x: z.number().min(0),
-  y: z.number().min(0),
-  marginX: z.number().min(0),
-  marginY: z.number().min(0),
+  x: z.number().min(0).max(300),
+  y: z.number().min(0).max(300),
+  marginX: z.number().min(0).max(300),
+  marginY: z.number().min(0).max(300),
 })
 export type Gaps = z.infer<typeof GapsSchema>
 

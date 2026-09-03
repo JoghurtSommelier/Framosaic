@@ -5,6 +5,7 @@ import type { PaperSize } from '../../export/pdfUnits'
 import { renderAllTiles, type ExportProgress } from '../../export/renderAllTiles'
 import { downloadBlob } from '../../lib/download'
 import { useProjectStore } from '../../store/projectStore'
+import { validateFormat } from '../../types/format'
 
 export function HomePrintPanel() {
   const format = useProjectStore((s) => s.format)
@@ -20,7 +21,7 @@ export function HomePrintPanel() {
   const [progress, setProgress] = useState<ExportProgress | null>(null)
   const [error, setError] = useState<string | null>(null)
 
-  const canRun = Boolean(sourceImage && crop)
+  const canRun = Boolean(sourceImage && crop) && validateFormat(format).length === 0
 
   const handleGenerate = async () => {
     if (!sourceImage || !crop) return

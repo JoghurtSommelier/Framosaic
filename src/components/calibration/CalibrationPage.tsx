@@ -31,7 +31,7 @@ export function CalibrationPage({ onBack }: { onBack: () => void }) {
         <button
           type="button"
           onClick={() => window.print()}
-          className="rounded-md bg-sky-600 px-4 py-2 text-sm font-medium text-white hover:bg-sky-700"
+          className="rounded-md bg-sky-700 px-4 py-2 text-sm font-medium text-white hover:bg-sky-800"
         >
           Print this page
         </button>
@@ -39,12 +39,12 @@ export function CalibrationPage({ onBack }: { onBack: () => void }) {
 
       <div className="flex flex-col items-center gap-8 rounded-lg border border-stone-200 bg-white p-8">
         <div className="flex flex-col items-center gap-2">
-          <div style={{ width: '50mm', height: '50mm' }} className="border-2 border-stone-900" />
+          <div className="h-[50mm] w-[50mm] border-2 border-stone-900" />
           <p className="text-xs text-stone-500">This square should measure 50 × 50 mm</p>
         </div>
 
         <div className="flex flex-col items-center gap-2">
-          <div style={{ width: '50mm', height: '2mm' }} className="bg-stone-900" />
+          <div className="h-[2mm] w-[50mm] bg-stone-900" />
           <p className="text-xs text-stone-500">This bar should measure 50 mm</p>
         </div>
       </div>

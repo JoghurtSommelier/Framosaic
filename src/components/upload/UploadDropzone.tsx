@@ -79,17 +79,6 @@ export function UploadDropzone() {
           isDragOver ? 'border-sky-400 bg-sky-50' : 'border-stone-300 bg-stone-50 hover:border-stone-400'
         }`}
       >
-        <input
-          ref={inputRef}
-          type="file"
-          accept="image/*"
-          className="sr-only"
-          onChange={(e) => {
-            const file = e.target.files?.[0]
-            if (file) void handleFile(file)
-            e.target.value = ''
-          }}
-        />
         {isLoading ? (
           <p className="text-sm text-stone-500">Loading image…</p>
         ) : sourceImage ? (
@@ -106,6 +95,19 @@ export function UploadDropzone() {
           </>
         )}
       </div>
+      <input
+        ref={inputRef}
+        type="file"
+        accept="image/*"
+        className="sr-only"
+        tabIndex={-1}
+        aria-hidden="true"
+        onChange={(e) => {
+          const file = e.target.files?.[0]
+          if (file) void handleFile(file)
+          e.target.value = ''
+        }}
+      />
       {error && (
         <p role="alert" className="mt-2 text-sm text-red-600">
           {error}

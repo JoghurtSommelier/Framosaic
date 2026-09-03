@@ -184,11 +184,17 @@ export function MosaicPreview() {
         </label>
       </div>
 
-      <div ref={containerRef} className="max-h-[70vh] overflow-auto rounded-lg bg-stone-200 p-4">
+      <div
+        ref={containerRef}
+        role="region"
+        aria-label="Mosaic preview, scrollable"
+        tabIndex={0}
+        className="max-h-[70vh] overflow-auto rounded-lg bg-stone-200 p-4"
+      >
         {sourceImage && crop ? (
           <canvas ref={canvasRef} onClick={handleCanvasClick} className="cursor-pointer" />
         ) : (
-          <p className="text-sm text-stone-500">Upload and crop a photo to see the mosaic preview.</p>
+          <p className="text-sm text-stone-600">Upload and crop a photo to see the mosaic preview.</p>
         )}
       </div>
 

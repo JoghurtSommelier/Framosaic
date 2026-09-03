@@ -26,6 +26,8 @@ export function ProjectIO() {
         type="file"
         accept="application/json"
         className="sr-only"
+        tabIndex={-1}
+        aria-hidden="true"
         onChange={async (e) => {
           const file = e.target.files?.[0]
           e.target.value = ''

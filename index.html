@@ -8,6 +8,20 @@
       name="description"
       content="Framosaic turns a photo into a grid of instant-film-sized tiles you print and reassemble into a wall mosaic."
     />
+    <!--
+      Partial CSP: meta tags can't carry frame-ancestors, report-uri, or
+      sandbox — those (plus the same directives below) are set as real HTTP
+      response headers when hosting supports it (see netlify.toml/vercel.json).
+      GitHub Pages, the default deploy target, does not support custom
+      headers, so this meta tag is the baseline everywhere.
+      style-src needs 'unsafe-inline': the crop tool (react-easy-crop) sets
+      pan/zoom via inline element.style, not stylesheets — verified against
+      a real browser console; script-src stays strict since nothing needs it.
+    -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self';"
+    />
     <title>Framosaic</title>
   </head>
   <body>

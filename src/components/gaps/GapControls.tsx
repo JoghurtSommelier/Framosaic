@@ -15,6 +15,14 @@ const FIELDS: Array<{ key: keyof Gaps; label: string }> = [
   { key: 'marginY', label: 'Outer margin (top/bottom)' },
 ]
 
+// Plausibility ceiling (spec §7) — well beyond any real gap/margin, just guards against a stray extra digit or a malformed loaded project.
+const MAX_GAP_MM = 300
+
+function clampMm(mm: number): number {
+  if (!Number.isFinite(mm)) return 0
+  return Math.min(MAX_GAP_MM, Math.max(0, mm))
+}
+
 export function GapControls() {
   const gaps = useProjectStore((s) => s.gaps)
   const units = useProjectStore((s) => s.units)
@@ -53,16 +61,17 @@ export function GapControls() {
                 max={max}
                 step={step}
                 value={displayValue}
-                onChange={(e) => setGaps({ [key]: unitToMm(Number(e.target.value), units) })}
+                onChange={(e) => setGaps({ [key]: clampMm(unitToMm(Number(e.target.value), units)) })}
                 className="flex-1"
                 aria-label={label}
               />
               <input
                 type="number"
                 min={0}
+                max={mmToUnit(MAX_GAP_MM, units)}
                 step={step}
                 value={Number(displayValue.toFixed(2))}
-                onChange={(e) => setGaps({ [key]: unitToMm(Number(e.target.value), units) })}
+                onChange={(e) => setGaps({ [key]: clampMm(unitToMm(Number(e.target.value), units)) })}
                 className="w-20 rounded border border-stone-300 px-2 py-1 text-sm"
               />
             </div>

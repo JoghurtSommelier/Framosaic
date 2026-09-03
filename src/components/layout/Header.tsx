@@ -1,7 +1,13 @@
 import { appConfig } from '../../config/appConfig'
 import { UndoRedoControls } from './UndoRedoControls'
 
-export function Header({ onOpenCalibration }: { onOpenCalibration?: () => void }) {
+export function Header({
+  onOpenCalibration,
+  onOpenAbout,
+}: {
+  onOpenCalibration?: () => void
+  onOpenAbout?: () => void
+}) {
   return (
     <header className="flex items-center justify-between border-b border-stone-200 bg-white px-4 py-3 sm:px-6 print:hidden">
       <div className="flex items-center gap-2">
@@ -15,6 +21,15 @@ export function Header({ onOpenCalibration }: { onOpenCalibration?: () => void }
       </div>
       <div className="flex items-center gap-3">
         <UndoRedoControls />
+        {onOpenAbout && (
+          <button
+            type="button"
+            onClick={onOpenAbout}
+            className="rounded px-2 py-1 text-sm text-stone-600 hover:bg-stone-100 hover:text-stone-900"
+          >
+            About
+          </button>
+        )}
         {onOpenCalibration && (
           <button
             type="button"
