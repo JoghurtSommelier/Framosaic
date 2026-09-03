@@ -1,5 +1,6 @@
 import type { Format } from '../types/format'
-import type { Gaps, Grid, Mapping } from '../types/project'
+import type { ExportMode, Gaps, Grid, Mapping } from '../types/project'
+import { computeMappingDimensionsMm } from './layout'
 
 export interface MmRect {
   x: number
@@ -32,11 +33,38 @@ export function mmRectToPx(rect: MmRect, dpi: number): PxRect {
   }
 }
 
+function assertTileInRange(grid: Grid, row: number, col: number): void {
+  if (row < 0 || row >= grid.rows || col < 0 || col >= grid.cols) {
+    throw new RangeError(`Tile (${row}, ${col}) is outside the ${grid.rows}x${grid.cols} grid.`)
+  }
+}
+
 /**
- * The image-area rectangle of one tile within the mosaic, in mm (spec §2.3
- * step 2). "spatial" keeps the tile at its true position (borders/gaps fall
- * on nothing, producing the classic white-grid look). "seamless" instead
- * maps tiles into a packed, gap-free grid so image content lines up flush.
+ * Where tile (row, col) physically sits on the wall — its full film
+ * footprint, in mm. This is always the spatial/physical grid formula
+ * (spec §2.2): printed tiles occupy real space with real gaps between
+ * them no matter which *source* mapping mode is selected, so this does
+ * not take a `mapping` parameter. Used for preview layout and the
+ * gluing-template PDF.
+ */
+export function computeTileFilmRectMm(format: Format, grid: Grid, gaps: Gaps, row: number, col: number): MmRect {
+  assertTileInRange(grid, row, col)
+  return {
+    x: gaps.marginX + col * (format.filmWidth + gaps.x),
+    y: gaps.marginY + row * (format.filmHeight + gaps.y),
+    width: format.filmWidth,
+    height: format.filmHeight,
+  }
+}
+
+/**
+ * The image-area rectangle of one tile, in mm (spec §2.3 step 2).
+ * "spatial" positions it at its true physical location within the mosaic
+ * (borders/gaps fall on nothing, producing the classic white-grid look
+ * when sliced from a mosaic-sized virtual canvas). "seamless" instead
+ * maps tiles into a packed, gap-free source grid so image content lines
+ * up flush — this is a *source-sampling* coordinate space, unrelated to
+ * where the tile is physically hung (see computeTileFilmRectMm for that).
  */
 export function computeTileImageRectMm(
   format: Format,
@@ -46,11 +74,8 @@ export function computeTileImageRectMm(
   col: number,
   mapping: Mapping,
 ): MmRect {
-  if (row < 0 || row >= grid.rows || col < 0 || col >= grid.cols) {
-    throw new RangeError(`Tile (${row}, ${col}) is outside the ${grid.rows}x${grid.cols} grid.`)
-  }
-
   if (mapping === 'seamless') {
+    assertTileInRange(grid, row, col)
     return {
       x: col * format.imageWidth,
       y: row * format.imageHeight,
@@ -59,13 +84,43 @@ export function computeTileImageRectMm(
     }
   }
 
-  const x0 = gaps.marginX + col * (format.filmWidth + gaps.x)
-  const y0 = gaps.marginY + row * (format.filmHeight + gaps.y)
+  const filmRect = computeTileFilmRectMm(format, grid, gaps, row, col)
   return {
-    x: x0 + format.borderLeft,
-    y: y0 + format.borderTop,
+    x: filmRect.x + format.borderLeft,
+    y: filmRect.y + format.borderTop,
     width: format.imageWidth,
     height: format.imageHeight,
+  }
+}
+
+/**
+ * Which sub-rect of a (mapping-aware, aspect-locked) crop feeds tile
+ * (row, col)'s image area. `cropPx` is the crop rectangle in whatever
+ * pixel space the caller is working in (preview or full-resolution) —
+ * the result is returned in that same space. An optional bleed (mm)
+ * expands the sampled window symmetrically, matching computeTileSourceRectMm.
+ */
+export function computeTileSourcePxRect(
+  cropPx: PxRect,
+  format: Format,
+  grid: Grid,
+  gaps: Gaps,
+  row: number,
+  col: number,
+  mapping: Mapping,
+  bleedMm = 0,
+): PxRect {
+  const totalDims = computeMappingDimensionsMm(format, grid, gaps, mapping)
+  const tileRectMm = computeTileSourceRectMm(format, grid, gaps, row, col, mapping, bleedMm)
+  const fx = tileRectMm.x / totalDims.width
+  const fy = tileRectMm.y / totalDims.height
+  const fw = tileRectMm.width / totalDims.width
+  const fh = tileRectMm.height / totalDims.height
+  return {
+    x: cropPx.x + fx * cropPx.width,
+    y: cropPx.y + fy * cropPx.height,
+    width: fw * cropPx.width,
+    height: fh * cropPx.height,
   }
 }
 
@@ -87,8 +142,6 @@ export function computeTileSourceRectMm(
     height: rect.height + 2 * bleedMm,
   }
 }
-
-export type ExportMode = 'imageArea' | 'fullFrame'
 
 export interface TileExportSizePx {
   width: number

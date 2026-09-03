@@ -20,7 +20,9 @@ export interface SourceImage {
   fullCanvas: HTMLCanvasElement
   width: number
   height: number
-  /** Downscaled preview shown in the crop tool / mosaic preview. */
+  /** Downscaled preview canvas, drawn directly into the mosaic preview. */
+  previewCanvas: HTMLCanvasElement
+  /** Object URL for the same canvas, for consumers that need an <img> src (e.g. the crop tool). */
   previewUrl: string
   previewWidth: number
   previewHeight: number

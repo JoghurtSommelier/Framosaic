@@ -3,6 +3,7 @@ import type { Format } from '../../types/format'
 import type { Gaps, Grid } from '../../types/project'
 import {
   computeCropAspect,
+  computeMappingDimensionsMm,
   computeMosaicDimensionsMm,
   computePackedDimensionsMm,
   suggestGridForTargetWidth,
@@ -76,6 +77,20 @@ describe('computeCropAspect', () => {
     const widerGaps = computeCropAspect(miniLike, grid, { ...gaps, x: 10 }, 'spatial')
     expect(biggerGrid).not.toBeCloseTo(base, 6)
     expect(widerGaps).not.toBeCloseTo(base, 6)
+  })
+})
+
+describe('computeMappingDimensionsMm', () => {
+  it('returns mosaic dimensions for spatial mapping', () => {
+    expect(computeMappingDimensionsMm(miniLike, grid, gaps, 'spatial')).toEqual(
+      computeMosaicDimensionsMm(miniLike, grid, gaps),
+    )
+  })
+
+  it('returns packed dimensions for seamless mapping', () => {
+    expect(computeMappingDimensionsMm(miniLike, grid, gaps, 'seamless')).toEqual(
+      computePackedDimensionsMm(miniLike, grid),
+    )
   })
 })
 

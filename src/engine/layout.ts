@@ -29,11 +29,15 @@ export function computePackedDimensionsMm(format: Format, grid: Grid): Dimension
   }
 }
 
+/** Picks packed vs. full mosaic dimensions depending on mapping mode — see computeCropAspect. */
+export function computeMappingDimensionsMm(format: Format, grid: Grid, gaps: Gaps, mapping: Mapping): DimensionsMm {
+  return mapping === 'seamless'
+    ? computePackedDimensionsMm(format, grid)
+    : computeMosaicDimensionsMm(format, grid, gaps)
+}
+
 export function computeCropAspect(format: Format, grid: Grid, gaps: Gaps, mapping: Mapping): number {
-  const dims =
-    mapping === 'seamless'
-      ? computePackedDimensionsMm(format, grid)
-      : computeMosaicDimensionsMm(format, grid, gaps)
+  const dims = computeMappingDimensionsMm(format, grid, gaps, mapping)
   return dims.width / dims.height
 }
 

@@ -32,10 +32,16 @@ export const AdjustmentsSchema = z.object({
 })
 export type Adjustments = z.infer<typeof AdjustmentsSchema>
 
+export const ExportModeSchema = z.enum(['imageArea', 'fullFrame'])
+export type ExportMode = z.infer<typeof ExportModeSchema>
+
+export const ExportFormatSchema = z.enum(['png', 'jpeg'])
+export type ExportFormat = z.infer<typeof ExportFormatSchema>
+
 export const ExportSettingsSchema = z.object({
   dpi: z.number().int().positive(),
-  mode: z.enum(['imageArea', 'fullFrame']),
-  format: z.enum(['png', 'jpeg']),
+  mode: ExportModeSchema,
+  format: ExportFormatSchema,
   bleedMm: z.number().min(0),
 })
 export type ExportSettings = z.infer<typeof ExportSettingsSchema>

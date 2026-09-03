@@ -4,7 +4,9 @@ import type { Gaps, Grid } from '../../types/project'
 import {
   computeCanvasSizePx,
   computeTileExportSizePx,
+  computeTileFilmRectMm,
   computeTileImageRectMm,
+  computeTileSourcePxRect,
   computeTileSourceRectMm,
   mmRectToPx,
   mmToPx,
@@ -162,5 +164,66 @@ describe('computeCanvasSizePx / mmRectToPx', () => {
       width: mmToPx(46, 300),
       height: mmToPx(62, 300),
     })
+  })
+})
+
+describe('computeTileFilmRectMm', () => {
+  it('is the film footprint at the physical grid position', () => {
+    expect(computeTileFilmRectMm(miniLike, grid, gaps, 1, 2)).toEqual({
+      x: 2 * (54 + 3),
+      y: 1 * (86 + 3),
+      width: 54,
+      height: 86,
+    })
+  })
+
+  it('does not depend on mapping mode (no mapping parameter to get wrong)', () => {
+    // spatial image rect must always be the film rect plus the format's own border offset
+    const film = computeTileFilmRectMm(miniLike, grid, gaps, 1, 2)
+    const image = computeTileImageRectMm(miniLike, grid, gaps, 1, 2, 'spatial')
+    expect(image).toEqual({
+      x: film.x + miniLike.borderLeft,
+      y: film.y + miniLike.borderTop,
+      width: miniLike.imageWidth,
+      height: miniLike.imageHeight,
+    })
+  })
+})
+
+describe('computeTileSourcePxRect', () => {
+  const fullCropPx = { x: 0, y: 0, width: 225, height: 442 } // matches the spatial mosaic aspect for `grid`/`gaps`
+
+  it('spatial mode: tile (0,0) maps to its fractional position within the crop', () => {
+    const rect = computeTileSourcePxRect(fullCropPx, miniLike, grid, gaps, 0, 0, 'spatial')
+    const imageRect = computeTileImageRectMm(miniLike, grid, gaps, 0, 0, 'spatial')
+    expect(rect.x).toBeCloseTo((imageRect.x / 225) * fullCropPx.width, 6)
+    expect(rect.y).toBeCloseTo((imageRect.y / 442) * fullCropPx.height, 6)
+    expect(rect.width).toBeCloseTo((imageRect.width / 225) * fullCropPx.width, 6)
+    expect(rect.height).toBeCloseTo((imageRect.height / 442) * fullCropPx.height, 6)
+  })
+
+  it('seamless mode: tiles tile the crop edge-to-edge with no gaps', () => {
+    const packedCropPx = { x: 0, y: 0, width: 4 * 46, height: 5 * 62 } // packed dims for `grid`
+    const first = computeTileSourcePxRect(packedCropPx, miniLike, grid, gaps, 0, 0, 'seamless')
+    const next = computeTileSourcePxRect(packedCropPx, miniLike, grid, gaps, 0, 1, 'seamless')
+    expect(first.x + first.width).toBeCloseTo(next.x, 6)
+    expect(first.y).toBeCloseTo(next.y, 6)
+  })
+
+  it('offsets by the crop origin, not just its size', () => {
+    const offsetCropPx = { x: 100, y: 50, width: 225, height: 442 }
+    const rect = computeTileSourcePxRect(offsetCropPx, miniLike, grid, gaps, 0, 0, 'spatial')
+    const atOrigin = computeTileSourcePxRect(fullCropPx, miniLike, grid, gaps, 0, 0, 'spatial')
+    expect(rect.x).toBeCloseTo(atOrigin.x + 100, 6)
+    expect(rect.y).toBeCloseTo(atOrigin.y + 50, 6)
+  })
+
+  it('expands the sampled window when a bleed is given', () => {
+    const noBleed = computeTileSourcePxRect(fullCropPx, miniLike, grid, gaps, 0, 0, 'spatial', 0)
+    const withBleed = computeTileSourcePxRect(fullCropPx, miniLike, grid, gaps, 0, 0, 'spatial', 1)
+    expect(withBleed.width).toBeGreaterThan(noBleed.width)
+    expect(withBleed.height).toBeGreaterThan(noBleed.height)
+    expect(withBleed.x).toBeLessThan(noBleed.x)
+    expect(withBleed.y).toBeLessThan(noBleed.y)
   })
 })

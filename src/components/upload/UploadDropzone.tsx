@@ -29,6 +29,7 @@ export function UploadDropzone() {
           fullCanvas: canvas,
           width,
           height,
+          previewCanvas,
           previewUrl,
           previewWidth: previewCanvas.width,
           previewHeight: previewCanvas.height,

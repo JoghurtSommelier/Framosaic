@@ -52,6 +52,7 @@ describe('useProjectStore', () => {
       fullCanvas: canvas,
       width: 100,
       height: 100,
+      previewCanvas: canvas,
       previewUrl: 'blob:first',
       previewWidth: 100,
       previewHeight: 100,

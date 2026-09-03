@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react'
 import Cropper, { type Area, type Point } from 'react-easy-crop'
 import { computeCropAspect } from '../../engine/layout'
+import { scaleToFullFactor } from '../../lib/cropMapping'
 import { useProjectStore } from '../../store/projectStore'
 
 export function CropTool() {
@@ -18,7 +19,7 @@ export function CropTool() {
   const [zoom, setZoom] = useState(1)
   const [rotation, setRotation] = useState(crop?.rotation ?? 0)
 
-  const scaleToFull = sourceImage ? sourceImage.width / sourceImage.previewWidth : 1
+  const scaleToFull = sourceImage ? scaleToFullFactor(sourceImage) : 1
 
   const initialCroppedAreaPixels: Area | undefined = useMemo(() => {
     if (!crop) return undefined

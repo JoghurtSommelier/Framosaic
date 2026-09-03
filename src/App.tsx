@@ -1,11 +1,13 @@
 import { AdjustmentControls } from './components/adjustments/AdjustmentControls'
 import { CropTool } from './components/crop/CropTool'
+import { ExportPanel } from './components/export/ExportPanel'
 import { FormatPicker } from './components/format/FormatPicker'
 import { GapControls } from './components/gaps/GapControls'
 import { GridControls } from './components/grid/GridControls'
 import { Footer } from './components/layout/Footer'
 import { Header } from './components/layout/Header'
 import { Section } from './components/layout/Section'
+import { MosaicPreview } from './components/preview/MosaicPreview'
 import { UploadDropzone } from './components/upload/UploadDropzone'
 
 function App() {
@@ -38,6 +40,14 @@ function App() {
             <CropTool />
           </Section>
         </div>
+
+        <Section title="6. Mosaic preview">
+          <MosaicPreview />
+        </Section>
+
+        <Section title="7. Export">
+          <ExportPanel />
+        </Section>
       </main>
       <Footer />
     </div>
