@@ -33,14 +33,14 @@ export function GapControls() {
   return (
     <div className="space-y-4">
       <div className="flex items-center gap-2">
-        <span className="text-sm text-stone-700">Units</span>
+        <span className="text-sm text-text">Units</span>
         {(['mm', 'cm', 'inch'] as const).map((u) => (
           <button
             key={u}
             type="button"
             onClick={() => setUnits(u)}
-            className={`rounded px-2 py-1 text-xs font-medium ${
-              units === u ? 'bg-stone-800 text-white' : 'bg-stone-100 text-stone-600 hover:bg-stone-200'
+            className={`rounded-full px-2.5 py-1 text-xs font-medium transition-colors ${
+              units === u ? 'bg-accent text-accent-contrast' : 'bg-border/40 text-text-muted hover:bg-border/60'
             }`}
             aria-pressed={units === u}
           >
@@ -52,7 +52,7 @@ export function GapControls() {
       {FIELDS.map(({ key, label }) => {
         const displayValue = mmToUnit(gaps[key], units)
         return (
-          <label key={key} className="block text-sm text-stone-700">
+          <label key={key} className="block text-sm text-text">
             {label}
             <div className="mt-1 flex items-center gap-3">
               <input
@@ -72,7 +72,7 @@ export function GapControls() {
                 step={step}
                 value={Number(displayValue.toFixed(2))}
                 onChange={(e) => setGaps({ [key]: clampMm(unitToMm(Number(e.target.value), units)) })}
-                className="w-20 rounded border border-stone-300 px-2 py-1 text-sm"
+                className="w-20 field text-sm"
               />
             </div>
           </label>

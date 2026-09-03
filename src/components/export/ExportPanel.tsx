@@ -1,3 +1,4 @@
+import { Download } from 'lucide-react'
 import { useState } from 'react'
 import { classifyResolution, computeEffectiveDpi } from '../../engine/resolution'
 import { computeTileSourcePxRect } from '../../engine/slicing'
@@ -19,9 +20,9 @@ const RESOLUTION_LABEL: Record<string, string> = {
   red: 'Low resolution — prints may look blurry',
 }
 const RESOLUTION_STYLE: Record<string, string> = {
-  green: 'text-emerald-700 bg-emerald-50 border-emerald-200',
-  yellow: 'text-amber-700 bg-amber-50 border-amber-200',
-  red: 'text-red-700 bg-red-50 border-red-200',
+  green: 'text-emerald-700 bg-emerald-50 border-emerald-200 dark:text-emerald-300 dark:bg-emerald-950 dark:border-emerald-900',
+  yellow: 'text-amber-700 bg-amber-50 border-amber-200 dark:text-amber-300 dark:bg-amber-950 dark:border-amber-900',
+  red: 'text-red-700 bg-red-50 border-red-200 dark:text-red-300 dark:bg-red-950 dark:border-red-900',
 }
 
 export function ExportPanel() {
@@ -99,11 +100,14 @@ export function ExportPanel() {
   return (
     <div className="space-y-4">
       {!sourceImage || !crop ? (
-        <p className="text-sm text-stone-500">Upload and crop a photo to enable export.</p>
+        <p className="text-sm text-text-muted">Upload and crop a photo to enable export.</p>
       ) : null}
 
       {formatErrors.length > 0 && (
-        <div role="alert" className="space-y-1 rounded-md border border-red-200 bg-red-50 px-3 py-2 text-xs text-red-700">
+        <div
+          role="alert"
+          className="space-y-1 rounded-md border border-red-200 bg-red-50 px-3 py-2 text-xs text-red-700 dark:border-red-900 dark:bg-red-950 dark:text-red-300"
+        >
           {formatErrors.map((err) => (
             <p key={err}>{err}</p>
           ))}
@@ -123,7 +127,7 @@ export function ExportPanel() {
           <select
             value={exportSettings.dpi}
             onChange={(e) => setExportSettings({ dpi: Number(e.target.value) })}
-            className="mt-1 w-full rounded border border-stone-300 px-2 py-1"
+            className="mt-1 w-full field"
           >
             {[150, 300, 600].map((dpi) => (
               <option key={dpi} value={dpi}>
@@ -137,7 +141,7 @@ export function ExportPanel() {
           <select
             value={exportSettings.format}
             onChange={(e) => setExportSettings({ format: e.target.value as ExportFormat })}
-            className="mt-1 w-full rounded border border-stone-300 px-2 py-1"
+            className="mt-1 w-full field"
           >
             <option value="png">PNG</option>
             <option value="jpeg">JPEG</option>
@@ -148,7 +152,7 @@ export function ExportPanel() {
           <select
             value={exportSettings.mode}
             onChange={(e) => setExportSettings({ mode: e.target.value as ExportMode })}
-            className="mt-1 w-full rounded border border-stone-300 px-2 py-1"
+            className="mt-1 w-full field"
           >
             <option value="imageArea">Image area only</option>
             <option value="fullFrame">Full frame (white border baked in)</option>
@@ -163,13 +167,13 @@ export function ExportPanel() {
             step={0.5}
             value={exportSettings.bleedMm}
             onChange={(e) => setExportSettings({ bleedMm: Number(e.target.value) })}
-            className="mt-1 w-full rounded border border-stone-300 px-2 py-1"
+            className="mt-1 w-full field"
           />
         </label>
       </div>
 
-      <div className="space-y-2 border-t border-stone-200 pt-3 text-sm">
-        <p className="text-xs font-medium text-stone-600">Gluing template PDF</p>
+      <div className="space-y-2 border-t border-border pt-3 text-sm">
+        <p className="text-xs font-medium text-text-muted">Gluing template PDF</p>
         <label className="flex items-center gap-2">
           <input
             type="checkbox"
@@ -192,7 +196,7 @@ export function ExportPanel() {
             <select
               value={paperSize}
               onChange={(e) => setPaperSize(e.target.value as PaperSize)}
-              className="rounded border border-stone-300 px-2 py-1"
+              className="field"
             >
               <option value="a4">A4</option>
               <option value="letter">Letter</option>
@@ -205,8 +209,9 @@ export function ExportPanel() {
         type="button"
         disabled={!canExport || isExporting}
         onClick={handleExport}
-        className="w-full rounded-md bg-sky-700 px-4 py-2 text-sm font-medium text-white hover:bg-sky-800 disabled:cursor-not-allowed disabled:bg-stone-300"
+        className="flex w-full items-center justify-center gap-2 rounded-full bg-accent px-4 py-2 text-sm font-medium text-accent-contrast transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40"
       >
+        <Download className="h-4 w-4" aria-hidden="true" />
         {isExporting
           ? progress
             ? `Rendering tile ${progress.completed}/${progress.total}…`
@@ -215,7 +220,7 @@ export function ExportPanel() {
       </button>
 
       {error && (
-        <p role="alert" className="text-sm text-red-600">
+        <p role="alert" className="text-sm text-red-600 dark:text-red-400">
           {error}
         </p>
       )}

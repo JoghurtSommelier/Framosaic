@@ -1,13 +1,105 @@
 @import 'tailwindcss';
 
-@theme {
-  --font-sans: 'Inter', system-ui, sans-serif;
-}
+/* Tailwind v4 class-based dark mode (no JS config file in v4). */
+@custom-variant dark (&:where(.dark, .dark *));
 
 :root {
   color-scheme: light;
+  --bg: #fafaf9;
+  --surface: #ffffff;
+  --surface-elevated: #ffffff;
+  --surface-glass: rgb(255 255 255 / 72%);
+  --text: #1c1917;
+  --text-muted: #57534e;
+  --accent: #0369a1;
+  --accent-fg: #0369a1;
+  --accent-contrast: #ffffff;
+  --border: #e7e5e4;
+  --ring: rgb(3 105 161 / 40%);
+}
+
+.dark {
+  color-scheme: dark;
+  --bg: #0a0a0b;
+  --surface: #18181b;
+  --surface-elevated: #232327;
+  --surface-glass: rgb(24 24 27 / 62%);
+  --text: #f4f4f5;
+  --text-muted: #a1a1aa;
+  --accent: #0369a1;
+  --accent-fg: #38bdf8;
+  --accent-contrast: #ffffff;
+  --border: #2e2e32;
+  --ring: rgb(56 189 248 / 40%);
+}
+
+@theme {
+  --font-sans: -apple-system, 'SF Pro Text', 'Inter', system-ui, sans-serif;
+
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-elevated: var(--surface-elevated);
+  --color-text: var(--text);
+  --color-text-muted: var(--text-muted);
+  --color-accent: var(--accent);
+  --color-accent-fg: var(--accent-fg);
+  --color-accent-contrast: var(--accent-contrast);
+  --color-border: var(--border);
+  --color-ring: var(--ring);
 }
 
 body {
-  @apply bg-stone-50 text-stone-900 antialiased;
+  @apply bg-bg text-text antialiased transition-colors duration-250;
+}
+
+@layer components {
+  /* Frosted-glass surface for sticky nav/toolbars (spec §5.5). */
+  .glass {
+    background: var(--surface-glass);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+  }
+
+  /* Shared text input/select styling — repeated across many form controls.
+     Deliberately in @layer components so a plain utility class placed
+     alongside it (e.g. a different px/py) still wins the cascade. */
+  .field {
+    @apply rounded-md border border-border bg-surface px-2 py-1 text-text;
+  }
+}
+
+/* Slim, precise range sliders — native accent-color, no extra JS. */
+input[type='range'] {
+  accent-color: var(--accent);
+  height: 4px;
+  border-radius: 999px;
+  background: var(--border);
+}
+
+input[type='checkbox'] {
+  accent-color: var(--accent);
+}
+
+/* Printed output (calibration page, etc.) must stay black-on-white regardless of the active theme. */
+@media print {
+  :root,
+  .dark {
+    color-scheme: light;
+    --bg: #ffffff;
+    --surface: #ffffff;
+    --text: #000000;
+    --text-muted: #3f3f46;
+    --border: #000000;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
 }

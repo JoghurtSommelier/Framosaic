@@ -25,7 +25,7 @@ export function GridControls() {
   return (
     <div className="space-y-3">
       <div className="flex gap-3">
-        <label className="block text-sm text-stone-700">
+        <label className="block text-sm text-text">
           Columns
           <input
             type="number"
@@ -33,10 +33,10 @@ export function GridControls() {
             max={20}
             value={grid.cols}
             onChange={(e) => setGrid({ ...grid, cols: clamp(Number(e.target.value)) })}
-            className="mt-1 w-20 rounded border border-stone-300 px-2 py-1 text-sm"
+            className="mt-1 w-20 field text-sm"
           />
         </label>
-        <label className="block text-sm text-stone-700">
+        <label className="block text-sm text-text">
           Rows
           <input
             type="number"
@@ -44,12 +44,12 @@ export function GridControls() {
             max={20}
             value={grid.rows}
             onChange={(e) => setGrid({ ...grid, rows: clamp(Number(e.target.value)) })}
-            className="mt-1 w-20 rounded border border-stone-300 px-2 py-1 text-sm"
+            className="mt-1 w-20 field text-sm"
           />
         </label>
       </div>
 
-      <p className="text-xs text-stone-500">
+      <p className="text-xs text-text-muted">
         Mosaic size: {formatMm(mosaic.width, units)} × {formatMm(mosaic.height, units)}
       </p>
 
@@ -59,10 +59,10 @@ export function GridControls() {
             key={`${preset.cols}x${preset.rows}`}
             type="button"
             onClick={() => setGrid(preset)}
-            className={`rounded px-2 py-1 text-xs font-medium ${
+            className={`rounded-full px-2.5 py-1 text-xs font-medium transition-colors ${
               grid.cols === preset.cols && grid.rows === preset.rows
-                ? 'bg-stone-800 text-white'
-                : 'bg-stone-100 text-stone-600 hover:bg-stone-200'
+                ? 'bg-accent text-accent-contrast'
+                : 'bg-border/40 text-text-muted hover:bg-border/60'
             }`}
           >
             {preset.cols}×{preset.rows}
@@ -70,15 +70,15 @@ export function GridControls() {
         ))}
       </div>
 
-      <div className="flex items-end gap-2 border-t border-stone-200 pt-3">
-        <label className="block text-sm text-stone-700">
+      <div className="flex items-end gap-2 border-t border-border pt-3">
+        <label className="block text-sm text-text">
           Target width ({units})
           <input
             type="number"
             min={1}
             value={targetWidth}
             onChange={(e) => setTargetWidth(Number(e.target.value))}
-            className="mt-1 w-24 rounded border border-stone-300 px-2 py-1 text-sm"
+            className="mt-1 w-24 field text-sm"
           />
         </label>
         <button
@@ -88,7 +88,7 @@ export function GridControls() {
             const suggested = suggestGridForTargetWidth(format, gaps, unitToMm(targetWidth, units), aspect)
             setGrid(suggested)
           }}
-          className="rounded-md bg-stone-800 px-3 py-1.5 text-sm text-white hover:bg-stone-700"
+          className="rounded-full bg-accent px-3 py-1.5 text-sm text-accent-contrast transition-opacity hover:opacity-90"
         >
           Suggest grid
         </button>

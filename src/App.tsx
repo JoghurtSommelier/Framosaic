@@ -20,7 +20,7 @@ function App() {
 
   if (view === 'calibration') {
     return (
-      <div className="flex min-h-screen flex-col bg-stone-100">
+      <div className="flex min-h-screen flex-col bg-bg">
         <Header />
         <CalibrationPage onBack={() => setView('editor')} />
         <Footer />
@@ -30,7 +30,7 @@ function App() {
 
   if (view === 'about') {
     return (
-      <div className="flex min-h-screen flex-col bg-stone-100">
+      <div className="flex min-h-screen flex-col bg-bg">
         <Header />
         <AboutPage onBack={() => setView('editor')} />
         <Footer />
@@ -39,7 +39,7 @@ function App() {
   }
 
   return (
-    <div className="flex min-h-screen flex-col bg-stone-100">
+    <div className="flex min-h-screen flex-col bg-bg">
       <Header onOpenCalibration={() => setView('calibration')} onOpenAbout={() => setView('about')} />
       <main className="mx-auto w-full max-w-6xl flex-1 space-y-4 p-4 sm:p-6">
         <Section title="1. Upload a photo">
@@ -51,7 +51,7 @@ function App() {
             <Section title="2. Format & grid">
               <div className="space-y-4">
                 <FormatPicker />
-                <div className="border-t border-stone-200 pt-3">
+                <div className="border-t border-border pt-3">
                   <GridControls />
                 </div>
               </div>
@@ -75,8 +75,7 @@ function App() {
         <Section title="7. Export">
           <div className="space-y-4">
             <ExportPanel />
-            <div className="border-t border-stone-200 pt-4">
-              <p className="mb-2 text-xs font-medium text-stone-600">No instant-film printer?</p>
+            <div className="border-t border-border pt-4">
               <HomePrintPanel />
             </div>
           </div>

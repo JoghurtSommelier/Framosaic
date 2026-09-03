@@ -14,7 +14,7 @@ export function AdjustmentControls() {
   return (
     <div className="space-y-4">
       {SLIDERS.map(({ key, label }) => (
-        <label key={key} className="block text-sm text-stone-700">
+        <label key={key} className="block text-sm text-text">
           {label}
           <div className="mt-1 flex items-center gap-3">
             <input
@@ -27,11 +27,11 @@ export function AdjustmentControls() {
               className="flex-1"
               aria-label={label}
             />
-            <span className="w-10 text-right text-xs text-stone-500">{adjustments[key]}</span>
+            <span className="w-10 text-right text-xs text-text-muted">{adjustments[key]}</span>
           </div>
         </label>
       ))}
-      <label className="flex items-center gap-2 text-sm text-stone-700">
+      <label className="flex items-center gap-2 text-sm text-text">
         <input
           type="checkbox"
           checked={adjustments.grayscale}

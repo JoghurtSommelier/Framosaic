@@ -24,12 +24,12 @@ export function FormatPicker() {
 
   return (
     <div className="space-y-3">
-      <label htmlFor="format-select" className="block text-sm font-medium text-stone-700">
+      <label htmlFor="format-select" className="block text-sm font-medium text-text">
         Instant film format
       </label>
       <select
         id="format-select"
-        className="w-full rounded-md border border-stone-300 bg-white px-3 py-2 text-sm"
+        className="w-full field px-3 py-2 text-sm"
         value={format.id}
         onChange={(e) => {
           if (e.target.value === 'custom') {
@@ -49,15 +49,15 @@ export function FormatPicker() {
       </select>
 
       {isCustom && (
-        <div className="grid grid-cols-2 gap-3 rounded-md border border-stone-200 bg-stone-50 p-3">
+        <div className="grid grid-cols-2 gap-3 rounded-xl border border-border bg-bg p-3">
           {CUSTOM_FIELDS.map(({ key, label }) => (
-            <label key={key} className="block text-xs text-stone-600">
+            <label key={key} className="block text-xs text-text-muted">
               {label}
               <input
                 type="number"
                 min={0}
                 step={0.1}
-                className="mt-1 w-full rounded border border-stone-300 px-2 py-1 text-sm"
+                className="mt-1 w-full field px-2 py-1 text-sm"
                 value={format[key] as number}
                 onChange={(e) => {
                   const value = Number(e.target.value)
@@ -69,7 +69,7 @@ export function FormatPicker() {
             </label>
           ))}
           {errors.length > 0 && (
-            <div role="alert" className="col-span-2 space-y-1 text-xs text-red-600">
+            <div role="alert" className="col-span-2 space-y-1 text-xs text-red-600 dark:text-red-400">
               {errors.map((err) => (
                 <p key={err}>{err}</p>
               ))}

@@ -1,3 +1,4 @@
+import { Redo2, Undo2 } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { canRedo, canUndo, redo, subscribeHistory, undo } from '../../store/history'
 
@@ -24,21 +25,21 @@ export function UndoRedoControls() {
         type="button"
         disabled={!canUndo()}
         onClick={undo}
-        className="rounded px-2 py-1 text-xs font-medium text-stone-600 hover:bg-stone-100 disabled:cursor-not-allowed disabled:opacity-40"
+        className="rounded-full p-1.5 text-text-muted transition-colors hover:bg-border/50 hover:text-text disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-transparent"
         aria-label="Undo"
         title="Undo (Ctrl/Cmd+Z)"
       >
-        ↶ Undo
+        <Undo2 className="h-4 w-4" aria-hidden="true" />
       </button>
       <button
         type="button"
         disabled={!canRedo()}
         onClick={redo}
-        className="rounded px-2 py-1 text-xs font-medium text-stone-600 hover:bg-stone-100 disabled:cursor-not-allowed disabled:opacity-40"
+        className="rounded-full p-1.5 text-text-muted transition-colors hover:bg-border/50 hover:text-text disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-transparent"
         aria-label="Redo"
         title="Redo (Ctrl/Cmd+Shift+Z)"
       >
-        ↷ Redo
+        <Redo2 className="h-4 w-4" aria-hidden="true" />
       </button>
     </div>
   )

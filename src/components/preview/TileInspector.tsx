@@ -1,3 +1,4 @@
+import { X } from 'lucide-react'
 import { useEffect, useRef } from 'react'
 import { classifyResolution, computeEffectiveDpi } from '../../engine/resolution'
 import { computeTileSourcePxRect } from '../../engine/slicing'
@@ -76,22 +77,22 @@ export function TileInspector({
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4"
       onClick={onClose}
     >
-      <div className="max-w-md rounded-lg bg-white p-4 shadow-xl" onClick={(e) => e.stopPropagation()}>
+      <div className="max-w-md rounded-2xl bg-surface p-4 shadow-xl" onClick={(e) => e.stopPropagation()}>
         <div className="mb-3 flex items-center justify-between">
-          <h3 className="text-sm font-semibold text-stone-900">
+          <h3 className="text-sm font-semibold text-text">
             Tile #{tileNumber(row, col, grid.cols)} — row {row + 1}, col {col + 1}
           </h3>
           <button
             type="button"
             onClick={onClose}
-            className="text-stone-400 hover:text-stone-700"
+            className="rounded-full p-1 text-text-muted transition-colors hover:bg-border/50 hover:text-text"
             aria-label="Close tile inspector"
           >
-            &times;
+            <X className="h-4 w-4" aria-hidden="true" />
           </button>
         </div>
-        <canvas ref={canvasRef} className="w-full rounded border border-stone-200" />
-        <div className="mt-3 flex items-center gap-2 text-xs text-stone-600">
+        <canvas ref={canvasRef} className="w-full rounded border border-border" />
+        <div className="mt-3 flex items-center gap-2 text-xs text-text-muted">
           <span className={`h-2.5 w-2.5 rounded-full ${RESOLUTION_COLOR[level]}`} aria-hidden="true" />
           <span>
             {Math.round(effectiveDpi)} dpi effective — {RESOLUTION_LABEL[level]}

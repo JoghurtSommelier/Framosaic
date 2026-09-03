@@ -1,3 +1,4 @@
+import { UploadCloud } from 'lucide-react'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { loadOrientedImage } from '../../lib/exif'
 import { canvasToObjectUrl, downscaleCanvas } from '../../lib/image'
@@ -75,23 +76,24 @@ export function UploadDropzone() {
           const file = e.dataTransfer.files[0]
           if (file) void handleFile(file)
         }}
-        className={`flex min-h-40 cursor-pointer flex-col items-center justify-center gap-2 rounded-lg border-2 border-dashed p-6 text-center transition-colors ${
-          isDragOver ? 'border-sky-400 bg-sky-50' : 'border-stone-300 bg-stone-50 hover:border-stone-400'
+        className={`flex min-h-40 cursor-pointer flex-col items-center justify-center gap-2 rounded-2xl border-2 border-dashed p-6 text-center transition-colors ${
+          isDragOver ? 'border-accent bg-accent/5' : 'border-border bg-bg hover:border-text-muted'
         }`}
       >
+        <UploadCloud className="h-6 w-6 text-text-muted" aria-hidden="true" />
         {isLoading ? (
-          <p className="text-sm text-stone-500">Loading image…</p>
+          <p className="text-sm text-text-muted">Loading image…</p>
         ) : sourceImage ? (
           <>
-            <p className="text-sm font-medium text-stone-700">{sourceImage.name}</p>
-            <p className="text-xs text-stone-500">
+            <p className="text-sm font-medium text-text">{sourceImage.name}</p>
+            <p className="text-xs text-text-muted">
               {sourceImage.width}×{sourceImage.height}px — click, drop, or paste to replace
             </p>
           </>
         ) : (
           <>
-            <p className="text-sm font-medium text-stone-700">Drop a photo here, click to browse, or paste it</p>
-            <p className="text-xs text-stone-500">JPEG or PNG, any resolution</p>
+            <p className="text-sm font-medium text-text">Drop a photo here, click to browse, or paste it</p>
+            <p className="text-xs text-text-muted">JPEG or PNG, any resolution</p>
           </>
         )}
       </div>
@@ -109,7 +111,7 @@ export function UploadDropzone() {
         }}
       />
       {error && (
-        <p role="alert" className="mt-2 text-sm text-red-600">
+        <p role="alert" className="mt-2 text-sm text-red-600 dark:text-red-400">
           {error}
         </p>
       )}

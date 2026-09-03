@@ -1,3 +1,4 @@
+import { Printer } from 'lucide-react'
 import { useState } from 'react'
 import { createExportEngine, type ExportEngine } from '../../export/exportApi'
 import { buildHomePrintPdf, type HomePrintTile } from '../../export/homePrintPdf'
@@ -67,19 +68,19 @@ export function HomePrintPanel() {
 
   return (
     <div className="space-y-3">
-      <p className="text-xs text-stone-500">
+      <p className="text-xs text-text-muted">
         No instant-film printer? Print each tile at its true physical size on regular paper (with crop marks) and
         cut them out instead.
       </p>
 
-      {!canRun && <p className="text-sm text-stone-500">Upload and crop a photo to enable this.</p>}
+      {!canRun && <p className="text-sm text-text-muted">Upload and crop a photo to enable this.</p>}
 
-      <label className="flex items-center gap-2 text-sm text-stone-700">
+      <label className="flex items-center gap-2 text-sm text-text">
         Paper size
         <select
           value={paperSize}
           onChange={(e) => setPaperSize(e.target.value as PaperSize)}
-          className="rounded border border-stone-300 px-2 py-1"
+          className="field"
         >
           <option value="a4">A4</option>
           <option value="letter">Letter</option>
@@ -90,8 +91,9 @@ export function HomePrintPanel() {
         type="button"
         disabled={!canRun || isRendering}
         onClick={handleGenerate}
-        className="w-full rounded-md bg-stone-700 px-4 py-2 text-sm font-medium text-white hover:bg-stone-800 disabled:cursor-not-allowed disabled:bg-stone-300"
+        className="flex w-full items-center justify-center gap-2 rounded-full bg-border/60 px-4 py-2 text-sm font-medium text-text transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40"
       >
+        <Printer className="h-4 w-4" aria-hidden="true" />
         {isRendering
           ? progress
             ? `Rendering tile ${progress.completed}/${progress.total}…`
@@ -100,7 +102,7 @@ export function HomePrintPanel() {
       </button>
 
       {error && (
-        <p role="alert" className="text-sm text-red-600">
+        <p role="alert" className="text-sm text-red-600 dark:text-red-400">
           {error}
         </p>
       )}

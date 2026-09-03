@@ -1,3 +1,4 @@
+import { FolderOpen, Save } from 'lucide-react'
 import { useRef, useState } from 'react'
 import { loadProjectFile, saveProjectFile } from '../../lib/projectFile'
 
@@ -10,15 +11,17 @@ export function ProjectIO() {
       <button
         type="button"
         onClick={() => saveProjectFile()}
-        className="rounded-md bg-stone-100 px-3 py-1.5 text-xs font-medium text-stone-700 hover:bg-stone-200"
+        className="flex items-center gap-1.5 rounded-full bg-border/40 px-3 py-1.5 text-xs font-medium text-text transition-colors hover:bg-border/60"
       >
+        <Save className="h-3.5 w-3.5" aria-hidden="true" />
         Save project (.json)
       </button>
       <button
         type="button"
         onClick={() => inputRef.current?.click()}
-        className="rounded-md bg-stone-100 px-3 py-1.5 text-xs font-medium text-stone-700 hover:bg-stone-200"
+        className="flex items-center gap-1.5 rounded-full bg-border/40 px-3 py-1.5 text-xs font-medium text-text transition-colors hover:bg-border/60"
       >
+        <FolderOpen className="h-3.5 w-3.5" aria-hidden="true" />
         Load project…
       </button>
       <input
@@ -37,7 +40,7 @@ export function ProjectIO() {
         }}
       />
       {error && (
-        <p role="alert" className="w-full text-xs text-red-600">
+        <p role="alert" className="w-full text-xs text-red-600 dark:text-red-400">
           {error}
         </p>
       )}

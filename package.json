@@ -17,7 +17,9 @@
   },
   "dependencies": {
     "comlink": "^4.4.2",
+    "framer-motion": "^13.2.0",
     "jszip": "^3.10.1",
+    "lucide-react": "^1.40.0",
     "pdf-lib": "^1.17.1",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",

@@ -32,12 +32,12 @@ export function CropTool() {
   }, [crop, scaleToFull])
 
   if (!sourceImage) {
-    return <p className="text-sm text-stone-500">Upload a photo to start cropping.</p>
+    return <p className="text-sm text-text-muted">Upload a photo to start cropping.</p>
   }
 
   return (
     <div className="space-y-3">
-      <div className="relative h-96 w-full overflow-hidden rounded-lg bg-stone-900">
+      <div className="relative h-96 w-full overflow-hidden rounded-2xl bg-black">
         <Cropper
           image={sourceImage.previewUrl}
           crop={cropPos}
@@ -59,7 +59,7 @@ export function CropTool() {
           }}
         />
       </div>
-      <label className="flex items-center gap-2 text-sm text-stone-700">
+      <label className="flex items-center gap-2 text-sm text-text">
         Zoom
         <input
           type="range"
@@ -72,7 +72,7 @@ export function CropTool() {
           aria-label="Crop zoom"
         />
       </label>
-      <label className="flex items-center gap-2 text-sm text-stone-700">
+      <label className="flex items-center gap-2 text-sm text-text">
         Rotation
         <input
           type="range"
@@ -84,7 +84,7 @@ export function CropTool() {
           className="flex-1"
           aria-label="Crop rotation in degrees"
         />
-        <span className="w-10 text-right text-xs text-stone-500">{rotation}°</span>
+        <span className="w-10 text-right text-xs text-text-muted">{rotation}°</span>
       </label>
     </div>
   )

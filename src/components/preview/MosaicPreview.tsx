@@ -161,7 +161,7 @@ export function MosaicPreview() {
         <select
           value={backgroundId}
           onChange={(e) => setBackgroundId(e.target.value)}
-          className="rounded border border-stone-300 px-2 py-1 text-xs"
+          className="field text-xs"
           aria-label="Wall background"
         >
           {WALL_BACKGROUNDS.map((b) => (
@@ -170,7 +170,7 @@ export function MosaicPreview() {
             </option>
           ))}
         </select>
-        <label className="ml-auto flex items-center gap-2 text-xs text-stone-600">
+        <label className="ml-auto flex items-center gap-2 text-xs text-text-muted">
           Zoom
           <input
             type="range"
@@ -189,12 +189,12 @@ export function MosaicPreview() {
         role="region"
         aria-label="Mosaic preview, scrollable"
         tabIndex={0}
-        className="max-h-[70vh] overflow-auto rounded-lg bg-stone-200 p-4"
+        className="max-h-[70vh] overflow-auto rounded-2xl bg-black/[0.04] p-4 dark:bg-white/[0.06]"
       >
         {sourceImage && crop ? (
           <canvas ref={canvasRef} onClick={handleCanvasClick} className="cursor-pointer" />
         ) : (
-          <p className="text-sm text-stone-600">Upload and crop a photo to see the mosaic preview.</p>
+          <p className="text-sm text-text-muted">Upload and crop a photo to see the mosaic preview.</p>
         )}
       </div>
 
@@ -222,8 +222,8 @@ function ToggleButton({ pressed, onClick, label }: { pressed: boolean; onClick: 
       type="button"
       aria-pressed={pressed}
       onClick={onClick}
-      className={`rounded px-2 py-1 text-xs font-medium ${
-        pressed ? 'bg-stone-800 text-white' : 'bg-stone-100 text-stone-600 hover:bg-stone-200'
+      className={`rounded-full px-2.5 py-1 text-xs font-medium transition-colors ${
+        pressed ? 'bg-accent text-accent-contrast' : 'bg-border/40 text-text-muted hover:bg-border/60'
       }`}
     >
       {label}
