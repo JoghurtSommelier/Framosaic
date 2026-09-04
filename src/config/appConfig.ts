@@ -10,6 +10,6 @@ export interface AppConfig {
 export const appConfig: AppConfig = {
   githubUrl: import.meta.env.VITE_GITHUB_URL || 'https://github.com/JoghurtSommelier/Framosaic',
   donationEnabled: (import.meta.env.VITE_DONATION_ENABLED ?? 'true') !== 'false',
-  donationUrl: import.meta.env.VITE_DONATION_URL || 'https://paypal.me/lucaspoo',
+  donationUrl: import.meta.env.VITE_DONATION_URL || 'https://buymeacoffee.com/joghurt',
   analyticsId: import.meta.env.VITE_ANALYTICS_ID || undefined,
 }

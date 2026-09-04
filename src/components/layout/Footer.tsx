@@ -32,6 +32,13 @@ export function Footer() {
         </div>
         <p>{BRAND_DISCLAIMER}</p>
         <p>Your photo is processed entirely in your browser — nothing is uploaded to a server.</p>
+        <p>
+          Built with{' '}
+          <a href="https://claude.com/claude-code" target="_blank" rel="noreferrer" className="underline hover:text-text">
+            Claude Code
+          </a>
+          .
+        </p>
       </div>
     </footer>
   )

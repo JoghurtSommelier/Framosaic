@@ -134,7 +134,7 @@ are used solely to describe format compatibility.
 ## Support
 
 If Framosaic is useful to you, consider
-[supporting the project](https://paypal.me/lucaspoo). Entirely optional —
+[supporting the project](https://buymeacoffee.com/joghurt). Entirely optional —
 the app is free either way.
 
 ## Contributing
