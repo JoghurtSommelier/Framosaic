@@ -1,5 +1,4 @@
 import { z } from 'zod'
-import { FormatSchema } from './format'
 
 export const GridSchema = z.object({
   rows: z.number().int().min(1).max(20),
@@ -51,19 +50,6 @@ export type Mapping = z.infer<typeof MappingSchema>
 
 export const UnitsSchema = z.enum(['mm', 'cm', 'inch'])
 export type Units = z.infer<typeof UnitsSchema>
-
-export const ProjectSchema = z.object({
-  version: z.literal(1),
-  format: FormatSchema,
-  grid: GridSchema,
-  gaps: GapsSchema,
-  crop: CropSchema.nullable(),
-  adjustments: AdjustmentsSchema,
-  export: ExportSettingsSchema,
-  mapping: MappingSchema,
-  units: UnitsSchema,
-})
-export type Project = z.infer<typeof ProjectSchema>
 
 export const DEFAULT_ADJUSTMENTS: Adjustments = {
   brightness: 0,

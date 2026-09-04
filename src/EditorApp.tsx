@@ -11,7 +11,6 @@ import { Footer } from './components/layout/Footer'
 import { Header } from './components/layout/Header'
 import { Section } from './components/layout/Section'
 import { MosaicPreview } from './components/preview/MosaicPreview'
-import { ProjectIO } from './components/project/ProjectIO'
 import { UploadDropzone } from './components/upload/UploadDropzone'
 
 type EditorView = 'editor' | 'about'
@@ -70,10 +69,6 @@ export default function EditorApp({ onGoHome }: { onGoHome: () => void }) {
               <HomePrintPanel />
             </div>
           </div>
-        </Section>
-
-        <Section title="Project file">
-          <ProjectIO />
         </Section>
       </main>
       <Footer />

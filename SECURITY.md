@@ -18,7 +18,7 @@ aim to acknowledge reports within a few days.
 
 Relevant reports include (but aren't limited to):
 
-- XSS or other injection via uploaded filenames, EXIF data, or project files
+- XSS or other injection via uploaded filenames or EXIF data
 - Dependency vulnerabilities with a real exploit path in this app
 - Any code path that would send image data or other user content off-device
 - CSP or build-pipeline weaknesses that could lead to supply-chain compromise

@@ -32,8 +32,8 @@ anywhere.
   reference sheet)
 - **Home-print mode**: no instant-film printer? Print each tile at true
   physical size on regular paper and cut it out instead
-- Undo/redo, save/load your project as `.json`, and non-destructive
-  brightness/contrast/saturation/grayscale adjustments
+- Undo/redo, and non-destructive brightness/contrast/saturation/grayscale
+  adjustments
 
 ## Development
 
