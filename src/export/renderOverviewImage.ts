@@ -5,12 +5,12 @@ import type { Adjustments, Crop } from '../types/project'
 
 /**
  * Renders the cropped source (with adjustments baked in) as a PNG, for the
- * PDF gluing template's overview page and 1:1 template pages. This spans
- * the crop's own aspect — for spatial mapping that equals the full mosaic
- * footprint (gaps included), so it's placed 1:1 as the mosaic background in
- * the PDF; for seamless mapping it's a reasonable schematic approximation
- * (the packed, gap-free crop stretched to fill the same footprint) since
- * this image is for the printed legend, not the pixel-exact tile exports.
+ * PDF gluing template's overview page. This spans the crop's own aspect —
+ * for spatial mapping that equals the full mosaic footprint (gaps
+ * included), so it's placed 1:1 as the mosaic background in the PDF; for
+ * seamless mapping it's a reasonable schematic approximation (the packed,
+ * gap-free crop stretched to fill the same footprint) since this image is
+ * for the printed legend, not the pixel-exact tile exports.
  */
 export async function renderOverviewImagePng(
   sourceImage: SourceImage,

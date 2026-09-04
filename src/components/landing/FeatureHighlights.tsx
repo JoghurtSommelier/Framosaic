@@ -9,7 +9,7 @@ const FEATURES = [
   {
     icon: FileImage,
     title: 'Gluing template',
-    body: 'A numbered PDF overview (plus an optional 1:1 alignment template) shows exactly where each print goes.',
+    body: 'A numbered PDF overview and legend shows exactly where each print goes.',
   },
   {
     icon: SlidersHorizontal,

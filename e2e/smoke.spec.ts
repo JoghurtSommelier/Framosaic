@@ -46,6 +46,6 @@ test('upload, configure, and export produces a correctly-named ZIP and a gluing-
 
   const pdfDoc = await PDFDocument.load(readFileSync(pdfPath))
   // Overview + dimensioned-schema overview + dimensioned-schema detail (spec §4,
-  // mandatory) + back-label sheet (on by default) — the 1:1 template is opt-in.
+  // mandatory) + back-label sheet (on by default).
   expect(pdfDoc.getPageCount()).toBe(4)
 })

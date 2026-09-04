@@ -28,8 +28,7 @@ anywhere.
 - **Export**: a ZIP of correctly-named, correctly-sized tile images (PNG or
   JPEG, configurable DPI, image-area or full-frame with the white border
   baked in), plus a PDF gluing template (numbered overview + legend,
-  optional 1:1 print-at-home template with crop marks, optional back-label
-  reference sheet)
+  optional back-label reference sheet)
 - **Home-print mode**: no instant-film printer? Print each tile at true
   physical size on regular paper and cut it out instead
 - Undo/redo, and non-destructive brightness/contrast/saturation/grayscale
@@ -73,9 +72,8 @@ straight into the browser bundle).
 6. **Export** — download a ZIP of the tile images and a gluing-template PDF.
    If you don't have an instant-film printer, use the home-print panel
    instead to print each tile at true size on regular paper.
-7. **Glue it to the wall** — use the gluing template's numbered overview
-   (and, if you printed it, the 1:1 alignment pages) to place each print in
-   the right spot.
+7. **Glue it to the wall** — use the gluing template's numbered overview to
+   place each print in the right spot.
 
 ### Supported formats
 

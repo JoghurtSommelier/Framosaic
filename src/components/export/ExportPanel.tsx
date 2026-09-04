@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { classifyResolution, computeEffectiveDpi } from '../../engine/resolution'
 import { computeTileSourcePxRect } from '../../engine/slicing'
 import { createExportEngine, type ExportEngine } from '../../export/exportApi'
-import { buildGluingTemplatePdf, type PaperSize } from '../../export/pdfTemplate'
+import { buildGluingTemplatePdf } from '../../export/pdfTemplate'
 import { renderOverviewImagePng } from '../../export/renderOverviewImage'
 import { buildExportZip, type ExportProgress } from '../../export/zipExport'
 import { cropToPreviewPxRect, scaleToFullFactor } from '../../lib/cropMapping'
@@ -36,9 +36,7 @@ export function ExportPanel() {
   const exportSettings = useProjectStore((s) => s.exportSettings)
   const setExportSettings = useProjectStore((s) => s.setExportSettings)
 
-  const [includeFullScaleTemplate, setIncludeFullScaleTemplate] = useState(false)
   const [includeBackLabelSheet, setIncludeBackLabelSheet] = useState(true)
-  const [paperSize, setPaperSize] = useState<PaperSize>('a4')
   const [isExporting, setIsExporting] = useState(false)
   const [progress, setProgress] = useState<ExportProgress | null>(null)
   const [error, setError] = useState<string | null>(null)
@@ -78,9 +76,7 @@ export function ExportPanel() {
         grid,
         gaps,
         overviewImagePng: overviewPng,
-        includeFullScaleTemplate,
         includeBackLabelSheet,
-        paperSize,
       })
       downloadBlob(new Blob([new Uint8Array(pdfBytes)], { type: 'application/pdf' }), 'framosaic-gluing-template.pdf')
 
@@ -177,32 +173,11 @@ export function ExportPanel() {
         <label className="flex items-center gap-2">
           <input
             type="checkbox"
-            checked={includeFullScaleTemplate}
-            onChange={(e) => setIncludeFullScaleTemplate(e.target.checked)}
-          />
-          Include 1:1 print-at-home template pages
-        </label>
-        <label className="flex items-center gap-2">
-          <input
-            type="checkbox"
             checked={includeBackLabelSheet}
             onChange={(e) => setIncludeBackLabelSheet(e.target.checked)}
           />
           Include back-label reference sheet
         </label>
-        {includeFullScaleTemplate && (
-          <label className="flex items-center gap-2">
-            Paper size
-            <select
-              value={paperSize}
-              onChange={(e) => setPaperSize(e.target.value as PaperSize)}
-              className="field"
-            >
-              <option value="a4">A4</option>
-              <option value="letter">Letter</option>
-            </select>
-          </label>
-        )}
       </div>
 
       <button

@@ -5,10 +5,8 @@ import { computeCornerDetailLayout } from '../engine/technicalDrawingLayout'
 import { tileNumber } from '../lib/tileNumbering'
 import type { Format } from '../types/format'
 import type { Gaps, Grid } from '../types/project'
-import { drawCropMarks, mmToPt, PAPER_SIZES_MM, type PaperSize } from './pdfUnits'
+import { mmToPt } from './pdfUnits'
 import { drawDetailLabel, drawDimension, makeDetailTransform, type DimensionDrawContext } from './technicalDrawing'
-
-export type { PaperSize } from './pdfUnits'
 
 export interface GluingTemplateOptions {
   format: Format
@@ -16,13 +14,11 @@ export interface GluingTemplateOptions {
   gaps: Gaps
   /** The cropped, adjustment-baked mosaic content — see renderOverviewImagePng. */
   overviewImagePng: Uint8Array
-  includeFullScaleTemplate: boolean
   includeBackLabelSheet: boolean
-  paperSize: PaperSize
 }
 
 export async function buildGluingTemplatePdf(options: GluingTemplateOptions): Promise<Uint8Array> {
-  const { format, grid, gaps, overviewImagePng, includeFullScaleTemplate, includeBackLabelSheet, paperSize } = options
+  const { format, grid, gaps, overviewImagePng, includeBackLabelSheet } = options
   const mosaic = computeMosaicDimensionsMm(format, grid, gaps)
 
   // Dynamically imported so pdf-lib's ~700kB parses only when the user actually exports.
@@ -38,10 +34,6 @@ export async function buildGluingTemplatePdf(options: GluingTemplateOptions): Pr
 
   drawOverviewPage(pdfDoc, { format, grid, gaps, mosaic, overviewImage, font, boldFont, rgb })
   drawDimensionedSchemaPages(pdfDoc, { format, grid, gaps, mosaic, overviewImage, font, boldFont, rgb })
-
-  if (includeFullScaleTemplate) {
-    drawFullScaleTemplate(pdfDoc, { mosaic, overviewImage, font, paperSize, rgb })
-  }
 
   if (includeBackLabelSheet) {
     drawBackLabelSheet(pdfDoc, { grid, font, boldFont, rgb })
@@ -297,84 +289,6 @@ function drawDimensionedSchemaPages(
   }
   for (const label of detail.borderLabels) {
     drawDetailLabel(detailPage, label, detailCtx)
-  }
-}
-
-function drawFullScaleTemplate(
-  pdfDoc: PDFDocument,
-  {
-    mosaic,
-    overviewImage,
-    font,
-    paperSize,
-    rgb,
-  }: {
-    mosaic: { width: number; height: number }
-    overviewImage: PDFImage
-    font: PDFFont
-    paperSize: PaperSize
-    rgb: typeof rgbFn
-  },
-) {
-  const paper = PAPER_SIZES_MM[paperSize]
-  const pageMarginMm = 12
-  const contentWidthMm = paper.width - pageMarginMm * 2
-  const contentHeightMm = paper.height - pageMarginMm * 2
-
-  const pagesX = Math.max(1, Math.ceil(mosaic.width / contentWidthMm))
-  const pagesY = Math.max(1, Math.ceil(mosaic.height / contentHeightMm))
-
-  for (let py = 0; py < pagesY; py++) {
-    for (let px = 0; px < pagesX; px++) {
-      const page = pdfDoc.addPage([mmToPt(paper.width), mmToPt(paper.height)])
-      const yFromTop = (topMm: number) => mmToPt(paper.height - topMm)
-
-      page.drawText('Print at 100% / actual size — do not scale to fit page', {
-        x: mmToPt(pageMarginMm),
-        y: yFromTop(pageMarginMm - 6),
-        size: 7,
-        font,
-        color: rgb(0.4, 0.4, 0.4),
-      })
-      const pageLabel = `Sheet col ${px + 1}/${pagesX}, row ${py + 1}/${pagesY}`
-      page.drawText(pageLabel, {
-        x: mmToPt(paper.width - pageMarginMm) - font.widthOfTextAtSize(pageLabel, 7),
-        y: yFromTop(pageMarginMm - 6),
-        size: 7,
-        font,
-        color: rgb(0.4, 0.4, 0.4),
-      })
-
-      if (px === 0 && py === 0) {
-        const barTopMm = pageMarginMm + contentHeightMm + 4
-        page.drawLine({
-          start: { x: mmToPt(pageMarginMm), y: yFromTop(barTopMm) },
-          end: { x: mmToPt(pageMarginMm + 50), y: yFromTop(barTopMm) },
-          thickness: mmToPt(0.4),
-          color: rgb(0, 0, 0),
-        })
-        page.drawText('This bar = 50mm — measure it after printing to verify scale', {
-          x: mmToPt(pageMarginMm),
-          y: yFromTop(barTopMm + 5),
-          size: 7,
-          font,
-        })
-      }
-
-      // Content outside a PDF page's boundary is clipped by viewers/printers,
-      // so the image can simply be drawn at true 1:1 scale, offset per page —
-      // no explicit clip path needed.
-      const offsetXMm = px * contentWidthMm
-      const offsetYMm = py * contentHeightMm
-      page.drawImage(overviewImage, {
-        x: mmToPt(pageMarginMm - offsetXMm),
-        y: yFromTop(pageMarginMm - offsetYMm + mosaic.height),
-        width: mmToPt(mosaic.width),
-        height: mmToPt(mosaic.height),
-      })
-
-      drawCropMarks(page, pageMarginMm, pageMarginMm, contentWidthMm, contentHeightMm, yFromTop, rgb)
-    }
   }
 }
 
