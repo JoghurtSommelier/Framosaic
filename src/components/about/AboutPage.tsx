@@ -62,8 +62,8 @@ export function AboutPage({ onBack }: { onBack: () => void }) {
           <li>Custom — any film/image/border dimensions you enter</li>
         </ul>
         <p className="text-xs text-text-muted">
-          These are industry-common approximations, not exact manufacturer specs — verify yours on the{' '}
-          <span className="font-medium">Calibration</span> page before printing a large batch.
+          These are industry-common approximations, not exact manufacturer specs — measure a real print
+          against them before printing a large batch.
         </p>
       </div>
 

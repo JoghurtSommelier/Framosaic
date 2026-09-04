@@ -38,14 +38,10 @@ test('the editor with a photo loaded has no serious/critical accessibility viola
   await assertNoSeriousViolations(page)
 })
 
-test('the About and Calibration pages have no serious/critical accessibility violations', async ({ page }) => {
+test('the About page has no serious/critical accessibility violations', async ({ page }) => {
   await goToEditor(page)
 
   await page.getByRole('button', { name: 'About' }).click()
-  await assertNoSeriousViolations(page)
-
-  await page.getByRole('button', { name: 'Back to editor' }).click()
-  await page.getByRole('button', { name: 'Calibration' }).click()
   await assertNoSeriousViolations(page)
 })
 

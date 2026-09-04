@@ -1,15 +1,13 @@
-import { Info, Ruler } from 'lucide-react'
+import { Info } from 'lucide-react'
 import { appConfig } from '../../config/appConfig'
 import { GitHubIcon } from './GitHubIcon'
 import { SiteNav } from './SiteNav'
 import { UndoRedoControls } from './UndoRedoControls'
 
 export function Header({
-  onOpenCalibration,
   onOpenAbout,
   onGoHome,
 }: {
-  onOpenCalibration?: () => void
   onOpenAbout?: () => void
   onGoHome?: () => void
 }) {
@@ -27,16 +25,6 @@ export function Header({
             >
               <Info className="h-4 w-4" aria-hidden="true" />
               <span className="hidden sm:inline">About</span>
-            </button>
-          )}
-          {onOpenCalibration && (
-            <button
-              type="button"
-              onClick={onOpenCalibration}
-              className="flex items-center gap-1.5 rounded-full px-3 py-1.5 text-sm text-text-muted transition-colors hover:bg-border/50 hover:text-text"
-            >
-              <Ruler className="h-4 w-4" aria-hidden="true" />
-              <span className="hidden sm:inline">Calibration</span>
             </button>
           )}
           <a

@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { AboutPage } from './components/about/AboutPage'
 import { AdjustmentControls } from './components/adjustments/AdjustmentControls'
-import { CalibrationPage } from './components/calibration/CalibrationPage'
 import { CropTool } from './components/crop/CropTool'
 import { ExportPanel } from './components/export/ExportPanel'
 import { FormatPicker } from './components/format/FormatPicker'
@@ -15,20 +14,10 @@ import { MosaicPreview } from './components/preview/MosaicPreview'
 import { ProjectIO } from './components/project/ProjectIO'
 import { UploadDropzone } from './components/upload/UploadDropzone'
 
-type EditorView = 'editor' | 'calibration' | 'about'
+type EditorView = 'editor' | 'about'
 
 export default function EditorApp({ onGoHome }: { onGoHome: () => void }) {
   const [view, setView] = useState<EditorView>('editor')
-
-  if (view === 'calibration') {
-    return (
-      <div className="flex min-h-screen flex-col bg-bg">
-        <Header onGoHome={onGoHome} />
-        <CalibrationPage onBack={() => setView('editor')} />
-        <Footer />
-      </div>
-    )
-  }
 
   if (view === 'about') {
     return (
@@ -42,7 +31,7 @@ export default function EditorApp({ onGoHome }: { onGoHome: () => void }) {
 
   return (
     <div className="flex min-h-screen flex-col bg-bg">
-      <Header onGoHome={onGoHome} onOpenCalibration={() => setView('calibration')} onOpenAbout={() => setView('about')} />
+      <Header onGoHome={onGoHome} onOpenAbout={() => setView('about')} />
       <main className="mx-auto w-full max-w-6xl flex-1 space-y-4 p-4 sm:p-6">
         <Section title="1. Upload a photo">
           <UploadDropzone />

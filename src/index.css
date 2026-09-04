@@ -80,7 +80,7 @@ input[type='checkbox'] {
   accent-color: var(--accent);
 }
 
-/* Printed output (calibration page, etc.) must stay black-on-white regardless of the active theme. */
+/* Printed output (home-print mode, etc.) must stay black-on-white regardless of the active theme. */
 @media print {
   :root,
   .dark {

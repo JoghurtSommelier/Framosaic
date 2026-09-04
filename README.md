@@ -32,7 +32,6 @@ anywhere.
   reference sheet)
 - **Home-print mode**: no instant-film printer? Print each tile at true
   physical size on regular paper and cut it out instead
-- **Calibration page** to verify your printer isn't silently rescaling
 - Undo/redo, save/load your project as `.json`, and non-destructive
   brightness/contrast/saturation/grayscale adjustments
 
@@ -78,15 +77,6 @@ straight into the browser bundle).
    (and, if you printed it, the 1:1 alignment pages) to place each print in
    the right spot.
 
-### Calibrating your printer
-
-Instant-film dimensions are industry-common approximations, and printers
-can introduce their own small scaling error. Open **Calibration** in the
-header, print that page at **100% / actual size** (not "fit to page"), and
-measure the printed square and bar with a ruler. If they're off from 50mm,
-adjust any Custom format dimensions you use by the resulting correction
-factor.
-
 ### Supported formats
 
 | Format | Film (mm) | Image area (mm) |
@@ -98,8 +88,8 @@ factor.
 | Polaroid Go | 53.9 × 66.6 | 46 × 47 |
 | Custom | any | any |
 
-These are editable defaults, not exact manufacturer specs — verify them on
-the Calibration page.
+These are editable defaults, not exact manufacturer specs — measure a real
+print against them before printing a large batch.
 
 ## Deployment
 

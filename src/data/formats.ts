@@ -3,9 +3,9 @@ import type { Format } from '../types/format'
 /**
  * Instant-film dimensions are industry-common approximations, not exact
  * manufacturer specs — they vary by unit/batch. These are editable defaults
- * (spec §2.1): verify them against a real print with the calibration page
- * and adjust as needed. Border widths are split to match each format's
- * well-known look (e.g. instant film's larger bottom border).
+ * (spec §2.1): verify them against a real print and adjust as needed.
+ * Border widths are split to match each format's well-known look (e.g.
+ * instant film's larger bottom border).
  */
 export const FORMAT_PRESETS: Format[] = [
   {
