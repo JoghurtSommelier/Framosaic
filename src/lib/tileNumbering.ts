@@ -1,4 +1,4 @@
-/** Row-major running number for tile (row, col), 1-based (spec §4: "Reihe/Spalte + laufende Nummer"). */
+/** Row-major running number for tile (row, col), 1-based (spec §4: row/column + running number). */
 export function tileNumber(row: number, col: number, cols: number): number {
   return row * cols + col + 1
 }
