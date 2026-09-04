@@ -1,6 +1,6 @@
 import type { CSSProperties } from 'react'
-import { BANNER_TILE_URLS } from '../../data/bannerTiles'
 import { usePrefersReducedMotion } from '../../hooks/usePrefersReducedMotion'
+import { useShowcaseConfig } from '../../hooks/useShowcaseConfig'
 
 interface RowConfig {
   offset: number
@@ -30,8 +30,8 @@ function Tile({ src, index }: { src: string; index: number }) {
   )
 }
 
-function MarqueeRow({ row, rowIndex }: { row: RowConfig; rowIndex: number }) {
-  const tiles = Array.from({ length: BANNER_TILE_URLS.length }, (_, i) => BANNER_TILE_URLS[(i + row.offset) % BANNER_TILE_URLS.length])
+function MarqueeRow({ row, rowIndex, tileUrls }: { row: RowConfig; rowIndex: number; tileUrls: string[] }) {
+  const tiles = Array.from({ length: tileUrls.length }, (_, i) => tileUrls[(i + row.offset) % tileUrls.length])
   // Duplicate the track so translateX(-50%) loops seamlessly.
   const doubled = [...tiles, ...tiles]
 
@@ -54,10 +54,10 @@ function MarqueeRow({ row, rowIndex }: { row: RowConfig; rowIndex: number }) {
   )
 }
 
-function StaticMosaicGrid() {
+function StaticMosaicGrid({ tileUrls }: { tileUrls: string[] }) {
   return (
     <div className="flex flex-wrap justify-center gap-4 py-4">
-      {BANNER_TILE_URLS.map((src, i) => (
+      {tileUrls.map((src, i) => (
         <Tile key={src} src={src} index={i} />
       ))}
     </div>
@@ -66,11 +66,12 @@ function StaticMosaicGrid() {
 
 export function MosaicBanner() {
   const prefersReducedMotion = usePrefersReducedMotion()
+  const { bannerTiles } = useShowcaseConfig()
 
   if (prefersReducedMotion) {
     return (
       <div aria-hidden="true">
-        <StaticMosaicGrid />
+        <StaticMosaicGrid tileUrls={bannerTiles} />
       </div>
     )
   }
@@ -78,7 +79,7 @@ export function MosaicBanner() {
   return (
     <div className="mosaic-banner mosaic-banner-fade" aria-hidden="true">
       {ROWS.map((row, i) => (
-        <MarqueeRow key={i} row={row} rowIndex={i} />
+        <MarqueeRow key={i} row={row} rowIndex={i} tileUrls={bannerTiles} />
       ))}
     </div>
   )

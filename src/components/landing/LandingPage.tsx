@@ -5,7 +5,7 @@ import { FormatsShowcase } from './FormatsShowcase'
 import { Hero } from './Hero'
 import { HowItWorks } from './HowItWorks'
 import { LandingNav } from './LandingNav'
-import { PreviewGallery } from './PreviewGallery'
+import { WallShowcase } from './WallShowcase'
 
 export function LandingPage({ onCreateMosaic }: { onCreateMosaic: () => void }) {
   return (
@@ -16,7 +16,7 @@ export function LandingPage({ onCreateMosaic }: { onCreateMosaic: () => void }) 
         <HowItWorks />
         <FormatsShowcase />
         <FeatureHighlights />
-        <PreviewGallery />
+        <WallShowcase />
         <CtaBand onCreateMosaic={onCreateMosaic} />
       </main>
       <Footer />
