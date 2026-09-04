@@ -1,10 +1,9 @@
 import { useEffect, useRef, useState, type MouseEvent } from 'react'
 import { createPlasterPattern, WALL_BACKGROUNDS } from '../../data/wallBackgrounds'
 import { computeMosaicDimensionsMm } from '../../engine/layout'
-import { computeTileFilmRectMm, computeTileImageRectMm, computeTileSourcePxRect } from '../../engine/slicing'
-import { adjustmentsToCssFilter } from '../../lib/adjustments'
+import { computeTileFilmRectMm } from '../../engine/slicing'
 import { cropToPreviewPxRect } from '../../lib/cropMapping'
-import { tileNumber } from '../../lib/tileNumbering'
+import { drawMosaicTiles } from '../../lib/mosaicCanvas'
 import { useProjectStore } from '../../store/projectStore'
 import { TileInspector } from './TileInspector'
 
@@ -70,54 +69,20 @@ export function MosaicPreview() {
 
     const toPx = (mm: number) => mm * scalePxPerMm
 
-    for (let row = 0; row < grid.rows; row++) {
-      for (let col = 0; col < grid.cols; col++) {
-        const filmRect = computeTileFilmRectMm(format, grid, gaps, row, col)
-        const imageRect = computeTileImageRectMm(format, grid, gaps, row, col, 'spatial')
-        const sourceRect = computeTileSourcePxRect(previewCropPx, format, grid, gaps, row, col, mapping)
-
-        if (framesEnabled) {
-          ctx.save()
-          ctx.shadowColor = 'rgba(0,0,0,0.35)'
-          ctx.shadowBlur = toPx(1.5)
-          ctx.shadowOffsetY = toPx(0.8)
-          ctx.fillStyle = '#fafaf7'
-          roundRect(ctx, toPx(filmRect.x), toPx(filmRect.y), toPx(filmRect.width), toPx(filmRect.height), toPx(1))
-          ctx.fill()
-          ctx.restore()
-        }
-
-        ctx.save()
-        ctx.filter = adjustmentsToCssFilter(adjustments)
-        ctx.drawImage(
-          sourceImage.previewCanvas,
-          sourceRect.x,
-          sourceRect.y,
-          sourceRect.width,
-          sourceRect.height,
-          toPx(imageRect.x),
-          toPx(imageRect.y),
-          toPx(imageRect.width),
-          toPx(imageRect.height),
-        )
-        ctx.restore()
-
-        if (showGridLines) {
-          ctx.strokeStyle = 'rgba(56,189,248,0.9)'
-          ctx.lineWidth = 1
-          ctx.strokeRect(toPx(imageRect.x), toPx(imageRect.y), toPx(imageRect.width), toPx(imageRect.height))
-        }
-
-        if (showNumbers) {
-          const label = String(tileNumber(row, col, grid.cols))
-          ctx.font = `${Math.max(10, toPx(4))}px sans-serif`
-          ctx.fillStyle = framesEnabled ? '#57534e' : '#ffffff'
-          ctx.textAlign = 'center'
-          ctx.textBaseline = 'middle'
-          ctx.fillText(label, toPx(imageRect.x + imageRect.width / 2), toPx(imageRect.y + imageRect.height / 2))
-        }
-      }
-    }
+    drawMosaicTiles({
+      ctx,
+      format,
+      grid,
+      gaps,
+      mapping,
+      source: sourceImage.previewCanvas,
+      cropPx: previewCropPx,
+      adjustments,
+      toPx,
+      framesEnabled,
+      showNumbers,
+      showGridLines,
+    })
   }, [
     format,
     grid,
@@ -203,17 +168,6 @@ export function MosaicPreview() {
       )}
     </div>
   )
-}
-
-function roundRect(ctx: CanvasRenderingContext2D, x: number, y: number, w: number, h: number, r: number) {
-  const radius = Math.min(r, w / 2, h / 2)
-  ctx.beginPath()
-  ctx.moveTo(x + radius, y)
-  ctx.arcTo(x + w, y, x + w, y + h, radius)
-  ctx.arcTo(x + w, y + h, x, y + h, radius)
-  ctx.arcTo(x, y + h, x, y, radius)
-  ctx.arcTo(x, y, x + w, y, radius)
-  ctx.closePath()
 }
 
 function ToggleButton({ pressed, onClick, label }: { pressed: boolean; onClick: () => void; label: string }) {
