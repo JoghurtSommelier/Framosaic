@@ -1,8 +1,9 @@
 import { useMemo, useState } from 'react'
-import Cropper, { type Area, type Point } from 'react-easy-crop'
+import Cropper, { type Area, type Point, type Size } from 'react-easy-crop'
 import { computeCropAspect } from '../../engine/layout'
 import { scaleToFullFactor } from '../../lib/cropMapping'
 import { useProjectStore } from '../../store/projectStore'
+import { CropImageAreaOverlay } from './CropImageAreaOverlay'
 
 export function CropTool() {
   const format = useProjectStore((s) => s.format)
@@ -18,6 +19,7 @@ export function CropTool() {
   const [cropPos, setCropPos] = useState<Point>({ x: 0, y: 0 })
   const [zoom, setZoom] = useState(1)
   const [rotation, setRotation] = useState(crop?.rotation ?? 0)
+  const [cropSize, setCropSize] = useState<Size | null>(null)
 
   const scaleToFull = sourceImage ? scaleToFullFactor(sourceImage) : 1
 
@@ -44,10 +46,12 @@ export function CropTool() {
           zoom={zoom}
           rotation={rotation}
           aspect={aspect}
+          showGrid={false}
           initialCroppedAreaPixels={initialCroppedAreaPixels}
           onCropChange={setCropPos}
           onZoomChange={setZoom}
           onRotationChange={setRotation}
+          onCropSizeChange={setCropSize}
           onCropComplete={(_area, areaPixels) => {
             setCrop({
               x: areaPixels.x * scaleToFull,
@@ -58,6 +62,7 @@ export function CropTool() {
             })
           }}
         />
+        {cropSize && <CropImageAreaOverlay cropSize={cropSize} format={format} grid={grid} gaps={gaps} mapping={mapping} />}
       </div>
       <label className="flex items-center gap-2 text-sm text-text">
         Zoom
