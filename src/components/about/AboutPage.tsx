@@ -2,8 +2,10 @@ import { ArrowLeft } from 'lucide-react'
 import { FORMAT_PRESETS } from '../../data/formats'
 import { appConfig } from '../../config/appConfig'
 import { BRAND_DISCLAIMER } from '../../content/disclaimer'
+import { useAnalyticsConsent } from '../../hooks/useAnalyticsConsent'
 
 export function AboutPage({ onBack }: { onBack: () => void }) {
+  const { consent, grant, deny, gaAvailable } = useAnalyticsConsent()
   return (
     <div className="mx-auto w-full max-w-2xl space-y-6 p-4 sm:p-6">
       <div className="flex items-center justify-between">
@@ -31,10 +33,21 @@ export function AboutPage({ onBack }: { onBack: () => void }) {
         <p>
           Framosaic runs entirely in your browser. Your photo is never uploaded to a server — all cropping,
           adjustment, and export happens on your device, and nothing about your image leaves it.
-          {appConfig.analyticsId
-            ? ' This deployment uses cookie-free, aggregate analytics.'
-            : ' This deployment has analytics disabled.'}
         </p>
+        <p>
+          {appConfig.analyticsId
+            ? 'This deployment uses cookie-free, aggregate analytics for the app itself.'
+            : 'This deployment has cookie-free analytics disabled.'}
+        </p>
+        {gaAvailable && (
+          <p>
+            This deployment can also use Google Analytics, which sets cookies — it stays off unless you
+            accept it.{' '}
+            <button type="button" onClick={consent === 'granted' ? deny : grant} className="font-medium underline">
+              {consent === 'granted' ? 'Disable Google Analytics' : 'Enable Google Analytics'}
+            </button>
+          </p>
+        )}
       </div>
 
       <div className="space-y-2 rounded-2xl border border-border bg-surface p-5 text-sm text-text">

@@ -1,5 +1,6 @@
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import { lazy, Suspense, useState } from 'react'
+import { ConsentBanner } from './components/layout/ConsentBanner'
 import { LandingPage } from './components/landing/LandingPage'
 import { DURATION } from './lib/motion'
 
@@ -16,25 +17,28 @@ function App() {
   const transition = prefersReducedMotion ? { duration: 0 } : { duration: DURATION.base }
 
   return (
-    <AnimatePresence mode="wait" initial={false}>
-      {!showEditor ? (
-        <motion.div key="landing" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={transition}>
-          <LandingPage onCreateMosaic={() => setShowEditor(true)} />
-        </motion.div>
-      ) : (
-        <motion.div key="editor" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={transition}>
-          <Suspense
-            fallback={
-              <div className="flex min-h-screen items-center justify-center bg-bg">
-                <p className="text-sm text-text-muted">Loading…</p>
-              </div>
-            }
-          >
-            <EditorApp onGoHome={() => setShowEditor(false)} />
-          </Suspense>
-        </motion.div>
-      )}
-    </AnimatePresence>
+    <>
+      <AnimatePresence mode="wait" initial={false}>
+        {!showEditor ? (
+          <motion.div key="landing" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={transition}>
+            <LandingPage onCreateMosaic={() => setShowEditor(true)} />
+          </motion.div>
+        ) : (
+          <motion.div key="editor" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={transition}>
+            <Suspense
+              fallback={
+                <div className="flex min-h-screen items-center justify-center bg-bg">
+                  <p className="text-sm text-text-muted">Loading…</p>
+                </div>
+              }
+            >
+              <EditorApp onGoHome={() => setShowEditor(false)} />
+            </Suspense>
+          </motion.div>
+        )}
+      </AnimatePresence>
+      <ConsentBanner />
+    </>
   )
 }
 

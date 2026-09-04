@@ -3,6 +3,7 @@ export interface AppConfig {
   donationEnabled: boolean
   donationUrl?: string
   analyticsId?: string
+  gaMeasurementId?: string
 }
 
 // Non-secret defaults — see .env.example. Every VITE_* var here is compiled
@@ -12,4 +13,5 @@ export const appConfig: AppConfig = {
   donationEnabled: (import.meta.env.VITE_DONATION_ENABLED ?? 'true') !== 'false',
   donationUrl: import.meta.env.VITE_DONATION_URL || 'https://buymeacoffee.com/joghurt',
   analyticsId: import.meta.env.VITE_ANALYTICS_ID || undefined,
+  gaMeasurementId: import.meta.env.VITE_GA_MEASUREMENT_ID || undefined,
 }

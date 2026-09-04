@@ -5,6 +5,7 @@ interface ImportMetaEnv {
   readonly VITE_DONATION_ENABLED?: string
   readonly VITE_DONATION_URL?: string
   readonly VITE_ANALYTICS_ID?: string
+  readonly VITE_GA_MEASUREMENT_ID?: string
   readonly VITE_SHOWCASE_BANNER?: string
   readonly VITE_SHOWCASE_WALL_SOURCE?: string
   readonly VITE_SHOWCASE_WALL_FOCUS?: string

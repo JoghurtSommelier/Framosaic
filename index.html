@@ -57,11 +57,13 @@
       headers, so this meta tag is the baseline everywhere.
       style-src needs 'unsafe-inline': the crop tool (react-easy-crop) sets
       pan/zoom via inline element.style, not stylesheets — verified against
-      a real browser console; script-src stays strict since nothing needs it.
+      a real browser console; script-src otherwise stays strict, only
+      allowing Google's gtag.js loader — and even that only ever loads
+      after explicit consent (see ConsentBanner/useAnalyticsConsent).
     -->
     <meta
       http-equiv="Content-Security-Policy"
-      content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self';"
+      content="default-src 'self'; script-src 'self' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self' https://www.google-analytics.com https://*.google-analytics.com https://www.googletagmanager.com; worker-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self';"
     />
     <title>Framosaic — Turn a photo into a wall mosaic</title>
   </head>
