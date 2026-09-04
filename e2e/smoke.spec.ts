@@ -36,16 +36,15 @@ test('upload, configure, and export produces a correctly-named ZIP and a gluing-
 
   const zip = await JSZip.loadAsync(readFileSync(zipPath))
   expect(Object.keys(zip.files).sort()).toEqual([
-    'kachel_r1_c1_nr1.png',
-    'kachel_r1_c2_nr2.png',
-    'kachel_r1_c3_nr3.png',
-    'kachel_r2_c1_nr4.png',
-    'kachel_r2_c2_nr5.png',
-    'kachel_r2_c3_nr6.png',
+    'tile_r1_c1_n1.png',
+    'tile_r1_c2_n2.png',
+    'tile_r1_c3_n3.png',
+    'tile_r2_c1_n4.png',
+    'tile_r2_c2_n5.png',
+    'tile_r2_c3_n6.png',
   ])
 
   const pdfDoc = await PDFDocument.load(readFileSync(pdfPath))
-  // Overview + dimensioned-schema overview + dimensioned-schema detail (spec §4,
-  // mandatory) + back-label sheet (on by default).
-  expect(pdfDoc.getPageCount()).toBe(4)
+  // A single overview page: numbered/lettered tiles, film + image-area boxes, legend.
+  expect(pdfDoc.getPageCount()).toBe(1)
 })

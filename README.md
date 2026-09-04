@@ -27,8 +27,9 @@ anywhere.
   numbering, and a per-tile resolution inspector
 - **Export**: a ZIP of correctly-named, correctly-sized tile images (PNG or
   JPEG, configurable DPI, image-area or full-frame with the white border
-  baked in), plus a PDF gluing template (numbered overview + legend,
-  optional back-label reference sheet)
+  baked in), plus a one-page PDF gluing template — a labeled overview
+  (matching the exported filenames) with each tile's film and image-area
+  boundaries drawn as boxes, plus the exact border/gap/total dimensions
 - **Home-print mode**: no instant-film printer? Print each tile at true
   physical size on regular paper and cut it out instead
 - Undo/redo, and non-destructive brightness/contrast/saturation/grayscale

@@ -12,7 +12,7 @@ function App() {
   const [showEditor, setShowEditor] = useState(false)
   const prefersReducedMotion = useReducedMotion()
 
-  // A consistent, dezent crossfade between landing and editor (spec §5.4) —
+  // A consistent, subtle crossfade between landing and editor (spec §5.4) —
   // skipped entirely (snaps to the end state) under prefers-reduced-motion.
   const transition = prefersReducedMotion ? { duration: 0 } : { duration: DURATION.base }
 

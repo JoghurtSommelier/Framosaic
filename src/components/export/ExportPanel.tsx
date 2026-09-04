@@ -36,7 +36,6 @@ export function ExportPanel() {
   const exportSettings = useProjectStore((s) => s.exportSettings)
   const setExportSettings = useProjectStore((s) => s.setExportSettings)
 
-  const [includeBackLabelSheet, setIncludeBackLabelSheet] = useState(true)
   const [isExporting, setIsExporting] = useState(false)
   const [progress, setProgress] = useState<ExportProgress | null>(null)
   const [error, setError] = useState<string | null>(null)
@@ -76,7 +75,6 @@ export function ExportPanel() {
         grid,
         gaps,
         overviewImagePng: overviewPng,
-        includeBackLabelSheet,
       })
       downloadBlob(new Blob([new Uint8Array(pdfBytes)], { type: 'application/pdf' }), 'framosaic-gluing-template.pdf')
 
@@ -165,18 +163,6 @@ export function ExportPanel() {
             onChange={(e) => setExportSettings({ bleedMm: Number(e.target.value) })}
             className="mt-1 w-full field"
           />
-        </label>
-      </div>
-
-      <div className="space-y-2 border-t border-border pt-3 text-sm">
-        <p className="text-xs font-medium text-text-muted">Gluing template PDF</p>
-        <label className="flex items-center gap-2">
-          <input
-            type="checkbox"
-            checked={includeBackLabelSheet}
-            onChange={(e) => setIncludeBackLabelSheet(e.target.checked)}
-          />
-          Include back-label reference sheet
         </label>
       </div>
 

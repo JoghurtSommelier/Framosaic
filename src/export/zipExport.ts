@@ -6,7 +6,7 @@ import type { TileRenderParams } from './renderTile'
 
 export type { ExportProgress } from './renderAllTiles'
 
-/** Renders every tile and packs them into a ZIP, named per spec §3.1 (kachel_r{row}_c{col}_nr{index}). */
+/** Renders every tile and packs them into a ZIP, named per spec §3.1 (tile_r{row}_c{col}_n{index}). */
 export async function buildExportZip(
   engine: ExportEngine,
   params: TileRenderParams,
