@@ -2,6 +2,7 @@ import { Heart } from 'lucide-react'
 import { appConfig } from '../../config/appConfig'
 import { BRAND_DISCLAIMER } from '../../content/disclaimer'
 import { GitHubIcon } from './GitHubIcon'
+import { ShareLinks } from './ShareLinks'
 
 export function Footer() {
   return (
@@ -29,6 +30,7 @@ export function Footer() {
             </a>
           )}
           <span>MIT License</span>
+          <ShareLinks />
         </div>
         <p>{BRAND_DISCLAIMER}</p>
         <p>Your photo is processed entirely in your browser — nothing is uploaded to a server.</p>

@@ -100,6 +100,14 @@ repo's **Settings → Pages**, set the source to "GitHub Actions"; in
 to pass; in **Settings → Code security**, enable Secret Scanning and Push
 Protection.
 
+The site is served from a custom domain (`public/CNAME`), configured in
+**Settings → Pages → Custom domain**. Because a custom domain serves from
+its own root rather than `<user>.github.io/<repo>/`, the build does *not*
+set `VITE_BASE_PATH` — if the custom domain is ever removed, add that env
+var back (see the `deploy` job) and update `public/CNAME`, `index.html`'s
+canonical/OG/JSON-LD URLs, and `public/robots.txt`/`public/sitemap.xml`
+to match.
+
 `netlify.toml` and `vercel.json` are included and ready to use if you'd
 rather deploy there instead — both hosts support the full security-header
 set (see [Security](#security) below), which GitHub Pages cannot.

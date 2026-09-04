@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://joghurtsommelier.github.io/Framosaic/sitemap.xml
+Sitemap: https://framosaic.biggurt.fun/sitemap.xml

@@ -3,12 +3,13 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
       content="Framosaic turns a photo into a grid of instant-film-sized tiles you print and reassemble into a wall mosaic."
     />
-    <link rel="canonical" href="https://joghurtsommelier.github.io/Framosaic/" />
+    <link rel="canonical" href="https://framosaic.biggurt.fun/" />
     <meta name="theme-color" content="#e9e3d8" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#1c1a16" media="(prefers-color-scheme: dark)" />
 
@@ -19,8 +20,8 @@
       property="og:description"
       content="Framosaic turns a photo into a grid of instant-film-sized tiles you print and reassemble into a wall mosaic."
     />
-    <meta property="og:url" content="https://joghurtsommelier.github.io/Framosaic/" />
-    <meta property="og:image" content="https://joghurtsommelier.github.io/Framosaic/og-image.png" />
+    <meta property="og:url" content="https://framosaic.biggurt.fun/" />
+    <meta property="og:image" content="https://framosaic.biggurt.fun/og-image.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
 
@@ -30,14 +31,14 @@
       name="twitter:description"
       content="Framosaic turns a photo into a grid of instant-film-sized tiles you print and reassemble into a wall mosaic."
     />
-    <meta name="twitter:image" content="https://joghurtsommelier.github.io/Framosaic/og-image.png" />
+    <meta name="twitter:image" content="https://framosaic.biggurt.fun/og-image.png" />
 
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
         "@type": "WebApplication",
         "name": "Framosaic",
-        "url": "https://joghurtsommelier.github.io/Framosaic/",
+        "url": "https://framosaic.biggurt.fun/",
         "description": "Framosaic turns a photo into a grid of instant-film-sized tiles you print and reassemble into a wall mosaic.",
         "applicationCategory": "PhotographyApplication",
         "operatingSystem": "Any (runs in the browser)",
@@ -68,7 +69,52 @@
     <title>Framosaic — Turn a photo into a wall mosaic</title>
   </head>
   <body>
-    <div id="root"></div>
+    <!--
+      This app is a client-rendered SPA (Vite + React, no SSR) — React
+      replaces #root's entire contents the instant it mounts, so real
+      browsers never see this. It exists purely for crawlers that don't run
+      JavaScript (search engines, link-preview bots), which would otherwise
+      see an empty page: real prose, real headings, and real internal
+      anchor links, kept in sync with what the mounted app actually shows.
+    -->
+    <div id="root">
+      <main style="max-width: 40rem; margin: 0 auto; padding: 2rem 1.5rem; font-family: system-ui, sans-serif; line-height: 1.6">
+        <h1>Turn one photo into a wall of instant prints</h1>
+        <p>
+          Framosaic splits a single photo into a grid of tiles sized for real instant-film formats — Fujifilm
+          Instax Mini, Square, and Wide, Polaroid 600/i-Type, Polaroid Go, or your own custom dimensions — so you
+          can print each tile individually and reassemble them into one large mosaic on your wall. Everything runs
+          entirely in your browser: your photo is never uploaded to a server, and no cropping, adjustment, or
+          export step ever leaves your own device.
+        </p>
+        <h2 id="how-it-works">How it works</h2>
+        <p>
+          Upload a photo — it never leaves your browser. Pick an instant-film format and a grid size, then crop
+          and adjust the image with a live preview that shows realistic film frames, a wall background, and tile
+          numbers as you work. When you're ready, export a ZIP of correctly named, correctly sized tile images
+          plus a PDF gluing template: a numbered overview and legend showing exactly where each print goes, with
+          an optional 1:1 print-at-home template and crop marks for anyone without an instant-film printer.
+        </p>
+        <h2 id="formats">Formats</h2>
+        <p>
+          Every major instant-film size is supported out of the box: Instax Mini (54×86mm film, 46×62mm image
+          area), Instax Square (72×86mm film, 62×62mm image area), Instax Wide (108×86mm film, 99×62mm image
+          area), Polaroid 600 / i-Type (88×107mm film, 79×79mm image area), and Polaroid Go (53.9×66.6mm film,
+          46×47mm image area) — or enter any custom film and image-area dimensions of your own.
+        </p>
+        <h2 id="preview">See it on the wall</h2>
+        <p>
+          However you crop it, your mosaic ends up looking like this — a grid of real instant-film prints,
+          complete with their characteristic white borders, reconstructing one photo. The live editor mirrors
+          this exact layout as you adjust your format, grid, and gaps, with a resolution check that flags any
+          tile that would print too soft before you export.
+        </p>
+        <p>
+          <a href="#how-it-works">How it works</a> · <a href="#formats">Supported formats</a> ·
+          <a href="#preview">See it on the wall</a>
+        </p>
+      </main>
+    </div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

@@ -69,9 +69,11 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
+      # No VITE_BASE_PATH override: this site is served from a custom domain
+      # (public/CNAME) at the domain's root, not from github.io/<repo>/ — so
+      # the default root base path (vite.config.ts) is correct here. Only
+      # set VITE_BASE_PATH if the custom domain is ever removed.
       - run: npm run build
-        env:
-          VITE_BASE_PATH: /${{ github.event.repository.name }}/
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
