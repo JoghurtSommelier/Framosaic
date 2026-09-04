@@ -6,6 +6,44 @@ All notable changes to this project are documented here. Format follows
 
 ## [Unreleased]
 
+## [1.2.0] - 2026-09-04
+
+### Added
+
+- A mandatory dimensioned technical drawing in the gluing-template PDF
+  (spec §4): a full-mosaic overview page with outer total-size dimension
+  lines, plus a corner-detail page showing film/image-area dimension
+  chains, gap dimensions, and border widths — all rendered as vector
+  CAD-style dimension lines with arrowheads and labels via `pdf-lib`.
+- A shared `SiteNav` component so the editor and landing page use
+  identical chrome (spec §5.4) — same sticky/frosted navbar, wordmark,
+  GitHub link, and theme toggle, with the editor contextually extending
+  it (Undo/Redo, About, Calibration). A `framer-motion` crossfade now
+  transitions between landing and editor.
+- Operator-configurable showcase art (spec §5.6/§6): a single "See it on
+  the wall" image (auto-cropped via `object-fit: cover` with an optional
+  focus point) replaces the tile-grid preview section. Both the wall
+  image and the hero banner tiles are swappable without a rebuild via
+  `VITE_SHOWCASE_*` env vars or a `public/showcase/showcase.json`
+  manifest, falling back to bundled placeholder art.
+- Search engine optimizations: a descriptive `<title>`, canonical link,
+  theme-color, Open Graph/Twitter Card meta backed by a generated
+  1200×630 social card image, `WebApplication` JSON-LD structured data,
+  `robots.txt`, and `sitemap.xml`.
+- Optional, consent-gated Google Analytics (GA4) via
+  `VITE_GA_MEASUREMENT_ID` — off by default until the visitor accepts a
+  consent banner (togglable later from the About page), since GA is
+  cookie-based unlike the app's existing cookie-free `analyticsId` slot.
+  The CSP now allows `googletagmanager.com`/`google-analytics.com`, and
+  the About page's privacy copy describes both analytics paths
+  accurately instead of a blanket "cookie-free" claim.
+
+- A footer disclaimer noting the app was built with Claude Code.
+
+### Changed
+
+- Donation link now points to Buy Me a Coffee instead of PayPal.
+
 ## [1.1.0] - 2026-09-03
 
 ### Added
