@@ -1,6 +1,21 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
-  <rect x="2" y="2" width="27" height="32" rx="2" fill="#fafaf7" stroke="#1f2937" stroke-width="2"/>
-  <rect x="6" y="6" width="19" height="19" fill="#38bdf8"/>
-  <rect x="35" y="14" width="27" height="32" rx="2" fill="#fafaf7" stroke="#1f2937" stroke-width="2"/>
-  <rect x="39" y="18" width="19" height="19" fill="#fb7185"/>
+  <defs>
+    <linearGradient id="tileBack" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#bae6fd"/>
+      <stop offset="100%" stop-color="#7dd3fc"/>
+    </linearGradient>
+    <linearGradient id="tileFront" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="100%" stop-color="#0369a1"/>
+    </linearGradient>
+    <filter id="depth" x="-40%" y="-40%" width="180%" height="180%">
+      <feDropShadow dx="0" dy="1" stdDeviation="1.6" flood-color="#0c4a6e" flood-opacity="0.28"/>
+    </filter>
+  </defs>
+  <rect x="2" y="2" width="27" height="32" rx="6" fill="#fdfdfc"/>
+  <rect x="6" y="6" width="19" height="19" rx="2.5" fill="url(#tileBack)"/>
+  <g filter="url(#depth)">
+    <rect x="35" y="14" width="27" height="32" rx="6" fill="#fdfdfc"/>
+    <rect x="39" y="18" width="19" height="19" rx="2.5" fill="url(#tileFront)"/>
+  </g>
 </svg>

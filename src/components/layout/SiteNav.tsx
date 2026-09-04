@@ -38,10 +38,25 @@ export function SiteNav({
   const wordmark = (
     <span className="flex items-center gap-2">
       <svg viewBox="0 0 64 64" className="h-7 w-7" aria-hidden="true">
-        <rect x="2" y="2" width="27" height="32" rx="2" fill="#fafaf7" stroke="#1f2937" strokeWidth="2" />
-        <rect x="6" y="6" width="19" height="19" fill="#38bdf8" />
-        <rect x="35" y="14" width="27" height="32" rx="2" fill="#fafaf7" stroke="#1f2937" strokeWidth="2" />
-        <rect x="39" y="18" width="19" height="19" fill="#fb7185" />
+        <defs>
+          <linearGradient id="wordmarkTileBack" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="#bae6fd" />
+            <stop offset="100%" stopColor="#7dd3fc" />
+          </linearGradient>
+          <linearGradient id="wordmarkTileFront" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="#38bdf8" />
+            <stop offset="100%" stopColor="#0369a1" />
+          </linearGradient>
+          <filter id="wordmarkDepth" x="-40%" y="-40%" width="180%" height="180%">
+            <feDropShadow dx="0" dy="1" stdDeviation="1.6" floodColor="#0c4a6e" floodOpacity="0.28" />
+          </filter>
+        </defs>
+        <rect x="2" y="2" width="27" height="32" rx="6" fill="#fdfdfc" />
+        <rect x="6" y="6" width="19" height="19" rx="2.5" fill="url(#wordmarkTileBack)" />
+        <g filter="url(#wordmarkDepth)">
+          <rect x="35" y="14" width="27" height="32" rx="6" fill="#fdfdfc" />
+          <rect x="39" y="18" width="19" height="19" rx="2.5" fill="url(#wordmarkTileFront)" />
+        </g>
       </svg>
       <span className="text-lg font-semibold tracking-tight text-text">Framosaic</span>
     </span>
